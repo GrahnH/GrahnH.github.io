@@ -69,6 +69,12 @@
             background: #e3f2fd;
             border-left-color: #2196f3;
         }
+        .doc-title-line {
+            display: flex;
+            align-items: center;
+            gap: 0.5em; 
+            flex-wrap: nowrap
+        }
         .notes-item {
             border-left-color: #9b59b6;
         }
@@ -172,9 +178,18 @@
             </div>
             
             <div class="doc-item notes-item coming-soon">
-                <a href="#">Project Updates</a>
+                <a href="#">Project Updates and News</a>
                 <div class="doc-description">Status updates and milestone tracking</div>
+
+                <!-- Latest Entry Preview -->
+                <div style="margin-top: 15px; padding: 12px; background: #f8f4fd; border-radius: 6px; border-left: 3px solid #8e44ad;">
+                    <div style="color: #8e44ad; font-weight: bold; font-size: 0.85em; margin-bottom: 5px;">📅 Latest: 2025-09-02</div>
+                    <div style="color: #5a5a5a; font-size: 0.8em; line-height: 1.4;">
+                        • trendtestR has been published on CRAN.<br>
+                    </div>
+                </div>
             </div>
+            
             <div class="doc-item notes-item coming-soon">
                 <a href="#">Learning Notes</a>
                 <div class="doc-description">Technical notes and learning resources</div>
@@ -193,13 +208,17 @@
         
         <div class="doc-grid">
             <div class="doc-item">
-                <a href="trendtestr-intro-CovidBerlin25.html">COVID Berlin 2025 Analysis</a>
-                <span class="status-badge vignette-label">vignette</span>  
+                <div class="doc-title-line">
+                    <a href="trendtestr-intro-CovidBerlin25.html">COVID Berlin 2025 Analysis</a>
+                    <span class="status-badge vignette-label">vignette</span>
+                </div>
                 <div class="doc-description">Workflow of trend analysis with COVID-19 data in Berlin using TrendTestR methods</div>
             </div>
             <div class="doc-item">
-                <a href="trendtestr-intro-eustockmarkets.html">EU Stock Markets Analysis</a>
-                <div class="status-badge vignette-label">vignette</div>  
+                <div class="doc-title-line">
+                    <a href="trendtestr-intro-eustockmarkets.html">EU Stock Markets Analysis</a>
+                    <span class="status-badge vignette-label">vignette</span>  
+                  </div>   
                 <div class="doc-description">Workflow example of trend analysis with European stock market data using TrendTestR methods</div>
             </div>
         </div>
