@@ -13,23 +13,23 @@
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
         }
-         .nav-bar a {
-   color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 16px;
-    padding: 8px 16px;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-}
 
-        .nav-bar a:hover {
-           background-color: #007bff;
-           color: white;
+        .back-button {
+            margin-bottom: 20px;
         }
-
-        .nav-bar a:before { 
-         content: '← ';
+        .back-button a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #8e44ad;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .back-button a:hover {
+            background: #7d3c98;
+            transform: translateY(-2px);
         }
         .log-container {
             background: white;
@@ -97,11 +97,11 @@
         }
     </style>
 </head>
-<nav class="nav-bar">
-    <a href="index.html">Back to Home</a>
-    <span style="margin-left: 20px; color: #6c757d;">Documentation  Center</span>
-</nav>
 <body>
+    <div class="back-button">
+        <a href="index.html">← Back to Home</a>
+    </div>
+
     <div class="log-container">
         <div class="log-header">
             <h1>📝 Development Log</h1>
@@ -124,28 +124,20 @@
                 <div class="log-date">2025-09-02</div>
                 <div class="log-text">• trendtestR on CRAN
                 </div>
-            </div>
-            
-            <div class="log-entry">
+           
                 <div class="log-date">2025-08-16</div>
                 <div class="log-text">• Packaged trendtestR
 • Passed CRAN-ready checks and rhub multi-platform validation
-•Completed unit testing</div>
-            </div>
-
-             <div class="log-entry">
+• Completed unit testing</div>
+         
                 <div class="log-date">2025-08-02</div>
                 <div class="log-text">• Finished the explore-series functions of trendtestR
 • Explore modeling functions of trendtestR evaluated and MVP finalized
-•Implemented data type inference and routing logic of trendtestR</div>
-            </div>
-
-            <div class="log-entry">
+• Implemented data type inference and routing logic of trendtestR</div>
+                
                 <div class="log-date">2025-07-10</div>
                 <div class="log-text">• Completed core functions, migrated to R package structure, and finalized documentation of trendtestR</div>
-            </div>
-
-            <div class="log-entry">
+              
                 <div class="log-date">2025-07-01</div>
                 <div class="log-text">• Initial workflow established of trendtestR</div>
             </div>
