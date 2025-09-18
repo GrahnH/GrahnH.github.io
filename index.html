@@ -3,55 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GitHub Pages Website</title>
+    <title>Programming Documentation Center</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #f5f5f5;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
         }
-        .container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #333;
+        .header {
             text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-        ul {
-            list-style-type: none;
-            padding: 0;
+        .header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
         }
-        li {
-            margin: 10px 0;
-            padding: 10px;
-            background-color: #f8f9fa;
-            border-radius: 5px;
-            border-left: 4px solid #007bff;
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2em;
         }
-        a {
+        .package-section {
+            background: white;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+        .package-section:hover {
+            transform: translateY(-5px);
+        }
+        .package-title {
+            color: #2980b9;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .notes-title {
+            color: #8e44ad;
+            border-bottom: 3px solid #9b59b6;
+        }
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .doc-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            transition: all 0.3s ease;
+        }
+        .doc-item:hover {
+            background: #e3f2fd;
+            border-left-color: #2196f3;
+        }
+        .notes-item {
+            border-left-color: #9b59b6;
+        }
+        .notes-item:hover {
+            background: #f3e5f5;
+            border-left-color: #8e44ad;
+        }
+        .doc-item a {
             text-decoration: none;
-            color: #007bff;
-            font-weight: bold;
+            color: #2980b9;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 5px;
         }
-        a:hover {
-            color: #0056b3;
+        .notes-item a {
+            color: #8e44ad;
+        }
+        .doc-item a:hover {
+            color: #1565c0;
+        }
+        .notes-item a:hover {
+            color: #6a1b9a;
+        }
+        .doc-description {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        .coming-soon {
+            opacity: 0.6;
+            background: #f5f5f5;
+            border-left-color: #bdc3c7;
+        }
+        .coming-soon a {
+            color: #7f8c8d;
+            cursor: default;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        .available {
+            background: #d4edda;
+            color: #155724;
+        }
+        .coming-soon-badge {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .r-package {
+            background: #e8f4f8;
+            color: #0277bd;
+            font-size: 0.8em;
+            padding: 2px 6px;
+            border-radius: 8px;
+            margin-left: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>TrendTestR Documentation</h1>
-        <p>Welcome to the TrendTestR documentation site. Choose a section below:</p>
+    <div class="header">
+        <h1>📚 Programming Documentation Center</h1>
+        <p>Documentation hub for packages, tools, and development notes</p>
+    </div>
+
+    <!-- Personal Notes Section -->
+    <div class="package-section">
+        <h2 class="package-title notes-title">📝 Personal Notes & Logs</h2>
+        <p>Development diary, project updates, and personal documentation.</p>
         
-        <ul>
-            <li><a href="trendtestr-intro-CovidBerlin25.html">TrendTestR Introduction - Covid Berlin 2025</a></li>
-            <li><a href="trendtestr-intro-eustockmarkets.html">TrendTestR Introduction - EU Stock Markets</a></li>
-        </ul>
+        <div class="doc-grid">
+            <div class="doc-item notes-item coming-soon">
+                <a href="#">Development Log</a>
+                <div class="doc-description">Daily development progress and insights</div>
+            </div>
+            <div class="doc-item notes-item coming-soon">
+                <a href="#">Project Updates</a>
+                <div class="doc-description">Status updates and milestone tracking</div>
+            </div>
+            <div class="doc-item notes-item coming-soon">
+                <a href="#">Learning Notes</a>
+                <div class="doc-description">Technical notes and learning resources</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TrendTestR Package Section -->
+    <div class="package-section">
+        <h2 class="package-title">
+            🔍 TrendTestR Documentation 
+            <span class="r-package">R Package</span>
+            <span class="status-badge available">Available</span>
+        </h2>
+        <p>Statistical tools for trend analysis and testing in time series data.</p>
+        
+        <div class="doc-grid">
+            <div class="doc-item">
+                <a href="trendtestr-intro-CovidBerlin25.html">COVID Berlin 2025 Analysis</a>
+                <div class="doc-description">Trend analysis of COVID-19 data in Berlin using TrendTestR methods</div>
+            </div>
+            <div class="doc-item">
+                <a href="trendtestr-intro-eustockmarkets.html">EU Stock Markets Analysis</a>
+                <div class="doc-description">Analysis example of European stock market data using TrendTestR methods</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Future Package Section -->
+    <div class="package-section">
+        <h2 class="package-title">🚀 Future Project <span class="status-badge coming-soon-badge">Coming Soon</span></h2>
+        <p>Space reserved for upcoming packages, tools, or documentation projects.</p>
+        
+        <div class="doc-grid">
+            <div class="doc-item coming-soon">
+                <a href="#">Documentation Placeholder</a>
+                <div class="doc-description">Future documentation will be available here</div>
+            </div>
+            <div class="doc-item coming-soon">
+                <a href="#">Additional Resources</a>
+                <div class="doc-description">Supplementary materials and examples</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align: center; margin-top: 40px; color: #7f8c8d;">
+        <p>🔧 Documentation site powered by GitHub Pages</p>
+        <p><em>Continuously updated with new projects and insights</em></p>
     </div>
 </body>
 </html>
