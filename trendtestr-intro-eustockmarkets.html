@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+<!-- Add these styles to the <head> section of your HTML file -->
 <style>
 .back-nav-container {
     background-color: #f8f9fa;
@@ -92,6 +93,7 @@
         margin-top: 8px;
         font-size: 12px;
     }
+    
     .back-to-top {
         bottom: 25px !important;
         right: 25px !important;
@@ -147,7 +149,7 @@
     background-position: center;
     background-size: contain;
     filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1));
-}    
+}
 </style>
 
 <div class="back-nav-container" style="display: flex; align-items: center; justify-content: space-between;">
@@ -157,13 +159,13 @@
     <span class="nav-title">Documentation Center</span>
 </div>
 
-<title>trendtestr-intro-eustockmarkets</title>
 <button class="back-to-top" onclick="scrollToTop()"></button>
+
 <script>
 // Show/hide back to top button based on scroll position
 window.addEventListener('scroll', function() {
     const backToTopButton = document.querySelector('.back-to-top');
-    if (window.pageYOffset > 200) {
+    if (window.pageYOffset > 300) {
         backToTopButton.classList.add('visible');
     } else {
         backToTopButton.classList.remove('visible');
@@ -176,7 +178,12 @@ function scrollToTop() {
         top: 0,
         behavior: 'smooth'
     });
-}    
+}
+
+</script>
+
+<title>trendtestr-intro-eustockmarkets</title>
+
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
 document.addEventListener('DOMContentLoaded', function(e) {
@@ -2376,6 +2383,7 @@ $(document).ready(function ()  {
 
 </body>
 </html>
+
 
 
 
