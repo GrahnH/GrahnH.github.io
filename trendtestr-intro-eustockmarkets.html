@@ -156,14 +156,14 @@
     </div>
     <span class="nav-title">Documentation Center</span>
 </div>
-  
-<title>trendtestr-intro-eustockmarkets</title>
 
+<title>trendtestr-intro-eustockmarkets</title>
+<button class="back-to-top" onclick="scrollToTop()"></button>
 <script>
 // Show/hide back to top button based on scroll position
 window.addEventListener('scroll', function() {
     const backToTopButton = document.querySelector('.back-to-top');
-    if (window.pageYOffset > 300) {
+    if (window.pageYOffset > 200) {
         backToTopButton.classList.add('visible');
     } else {
         backToTopButton.classList.remove('visible');
@@ -177,7 +177,6 @@ function scrollToTop() {
         behavior: 'smooth'
     });
 }    
-<button class="back-to-top" onclick="scrollToTop()"></button>
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
 document.addEventListener('DOMContentLoaded', function(e) {
@@ -2377,6 +2376,7 @@ $(document).ready(function ()  {
 
 </body>
 </html>
+
 
 
 
