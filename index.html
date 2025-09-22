@@ -467,92 +467,7 @@
       window.addEventListener('resize', closeTooltip); 
     })(); 
 
-    /* ===== Notes overview / search ===== */ 
-    function renderNotesPreview(notes, containerId, maxLength = 60) { 
-      const container = document.getElementById(containerId); 
-      if (!container) return; 
-
-      container.innerHTML = ''; 
-      if (!notes || notes.length === 0) { 
-        container.innerHTML = '<div style="color: #7f8c8d; font-style: italic; font-size: 0.8em; padding: 10px;">No notes available</div>'; 
-        return; 
-      } 
-
-      notes.slice(0, 1).forEach(note => { 
-        const noteElement = document.createElement('div'); 
-        noteElement.style.cssText = ` 
-          background: white; border-radius: 6px; margin-top: 15px; margin-bottom: 8px; 
-          overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: transform 0.2s ease; 
-        `; 
-        noteElement.innerHTML = ` 
-          <div style="background: #8e44ad; color: white; padding: 8px 12px; font-weight: 600; font-size: 0.8em;"> 
-            ${note.date} • ${note.title} 
-          </div> 
-          <div style="padding: 10px 12px;"> 
-            <div style="color: #5a5a5a; font-size: 0.75em; line-height: 1.4; margin-bottom: 8px;"> 
-              ${note.content.length > maxLength ? note.content.substring(0, maxLength) + '...' : note.content} 
-            </div> 
-            <div> 
-              ${note.tags.map(tag => `<span style="background: #f0f0f0; color: #8e44ad; padding: 2px 6px; border-radius: 8px; font-size: 0.7em; margin-right: 4px; font-weight: 500;">${tag}</span>`).join('')} 
-            </div> 
-          </div> 
-        `; 
-        noteElement.addEventListener('mouseenter', () => { 
-          noteElement.style.transform = 'translateY(-2px)'; 
-          noteElement.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)'; 
-        }); 
-        noteElement.addEventListener('mouseleave', () => { 
-          noteElement.style.transform = 'translateY(0)'; 
-          noteElement.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)'; 
-        }); 
-        container.appendChild(noteElement); 
-      }); 
-    } 
-
-    function searchLearningNotes() { 
-      const notes = window.learningNotesData || []; 
-      const searchTerm = (document.getElementById('notesSearchInput').value || '').toLowerCase().trim(); 
-      const recentSection = document.getElementById('recentNotesPreview'); 
-      const searchSection = document.getElementById('searchResults'); 
-      const noResultsSection = document.getElementById('noSearchResults'); 
-
-      if (searchTerm === '') { 
-        recentSection.style.display = 'block'; 
-        searchSection.style.display = 'none'; 
-        noResultsSection.style.display = 'none'; 
-      } else { 
-        const filteredNotes = notes.filter(note => 
-          note.title.toLowerCase().includes(searchTerm) || 
-          note.content.toLowerCase().includes(searchTerm) || 
-          (note.tags || []).some(tag => (tag+'').toLowerCase().includes(searchTerm)) 
-        ); 
-
-        recentSection.style.display = 'none'; 
-        if (filteredNotes.length > 0) { 
-          searchSection.style.display = 'block'; 
-          noResultsSection.style.display = 'none'; 
-          renderNotesPreview(filteredNotes, 'searchResultsContainer', 80); 
-        } else { 
-          searchSection.style.display = 'none'; 
-          noResultsSection.style.display = 'block'; 
-        } 
-      } 
-    } 
-
-    document.addEventListener('DOMContentLoaded', function () { 
-      const notes = window.learningNotesData || []; 
-      const devLogs = window.devLogData || []; 
-
-      renderNotesPreview(notes, 'recentNotesContainer'); 
-      renderNotesPreview(devLogs, 'latestDevLogContainer'); 
-
-      const searchInput = document.getElementById('notesSearchInput'); 
-      if (searchInput) { 
-        searchInput.addEventListener('input', searchLearningNotes); 
-        searchInput.addEventListener('focus', function(){ this.style.borderColor = '#8e44ad'; }); 
-        searchInput.addEventListener('blur',  function(){ this.style.borderColor = '#dee2e6'; }); 
-      } 
-    }); 
+    
   </script> 
   <script> 
     // Sidebar toggle (English comment): toggles both sidebar and overlay visibility
@@ -561,5 +476,120 @@
       document.getElementById("overlay").classList.toggle("active"); 
     } 
   </script> 
+  
+  <script src="learning-notes-data.js"></script>
+    <script src="dev-log-data.js"></script>
+    <script>
+        function renderNotesPreview(notes, containerId, maxLength = 60) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            container.innerHTML = '';
+
+            if (!notes || notes.length === 0) {
+                container.innerHTML = '<div style="color: #7f8c8d; font-style: italic; font-size: 0.8em; padding: 10px;">No notes available</div>';
+                return;
+            }
+
+            notes.slice(0, 1).forEach(note => {
+                const noteElement = document.createElement('div');
+                noteElement.style.cssText = `
+                    background: white; 
+                    border-radius: 6px; 
+                    margin-top: 15px;
+                    margin-bottom: 8px; 
+                    overflow: hidden;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                    transition: transform 0.2s ease;
+                `;
+                
+                noteElement.innerHTML = `
+                    <div style="background: #8e44ad; color: white; padding: 8px 12px; font-weight: 600; font-size: 0.8em;">
+                        ${note.date} • ${note.title}
+                    </div>
+                    <div style="padding: 10px 12px;">
+                        <div style="color: #5a5a5a; font-size: 0.75em; line-height: 1.4; margin-bottom: 8px;">
+                            ${note.content.length > maxLength ? note.content.substring(0, maxLength) + '...' : note.content}
+                        </div>
+                        <div>
+                            ${note.tags.map(tag => `<span style="background: #f0f0f0; color: #8e44ad; padding: 2px 6px; border-radius: 8px; font-size: 0.7em; margin-right: 4px; font-weight: 500;">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                // Add hover effect
+                noteElement.addEventListener('mouseenter', () => {
+                    noteElement.style.transform = 'translateY(-2px)';
+                    noteElement.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+                });
+                noteElement.addEventListener('mouseleave', () => {
+                    noteElement.style.transform = 'translateY(0)';
+                    noteElement.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+                });
+                
+                container.appendChild(noteElement);
+            });
+        }
+
+        function searchLearningNotes() {
+            const notes = window.learningNotesData || [];
+            const searchTerm = document.getElementById('notesSearchInput').value.toLowerCase().trim();
+            const recentSection = document.getElementById('recentNotesPreview');
+            const searchSection = document.getElementById('searchResults');
+            const noResultsSection = document.getElementById('noSearchResults');
+
+            if (searchTerm === '') {
+                // Show recent notes
+                recentSection.style.display = 'block';
+                searchSection.style.display = 'none';
+                noResultsSection.style.display = 'none';
+            } else {
+                // Filter notes
+                const filteredNotes = notes.filter(note =>
+                    note.title.toLowerCase().includes(searchTerm) ||
+                    note.content.toLowerCase().includes(searchTerm) ||
+                    note.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+                );
+
+                recentSection.style.display = 'none';
+
+                if (filteredNotes.length > 0) {
+                    searchSection.style.display = 'block';
+                    noResultsSection.style.display = 'none';
+                    renderNotesPreview(filteredNotes, 'searchResultsContainer', 80);
+                } else {
+                    searchSection.style.display = 'none';
+                    noResultsSection.style.display = 'block';
+                }
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            const notes = window.learningNotesData || [];
+            const devLogs = window.devLogData || [];
+            
+            // Initialize recent notes
+            renderNotesPreview(notes, 'recentNotesContainer');
+            
+            // Initialize latest dev log
+            renderNotesPreview(devLogs, 'latestDevLogContainer');
+            
+            // Add search functionality
+            const searchInput = document.getElementById('notesSearchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', searchLearningNotes);
+                
+                // Add focus/blur effects for search input
+                searchInput.addEventListener('focus', function() {
+                    this.style.borderColor = '#8e44ad';
+                });
+                
+                searchInput.addEventListener('blur', function() {
+                    this.style.borderColor = '#dee2e6';
+                });
+            }
+        });
+    </script>
 </body> 
 </html>
