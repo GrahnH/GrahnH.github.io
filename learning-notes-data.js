@@ -7,7 +7,7 @@ const learningNotesData = [
         date: "2025-09-20",
         title: "Advanced R Programming",
         content: "Functional programming with purrr, data manipulation, custom functions with proper error handling",
-        link: "#",
+        link: "dev-log.html",
         tags: ["R", "Programming", "Data Science"]
     },
     {
