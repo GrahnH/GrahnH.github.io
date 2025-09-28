@@ -4,11 +4,11 @@
 const learningNotesData = [
     {
         id: 1,
-        date: "2025-09-20",
-        title: "Advanced R Programming",
-        content: "Functional programming with purrr, data manipulation, custom functions with proper error handling",
-        link: "dev-log.html",
-        tags: ["R", "Programming", "Data Science"]
+        date: "2025-09-28",
+        title: "Building R Packages: A Personal Learning Handbook",
+        content: "How to Start from the Beginning and Build an R Package in 3 Months",
+        link: "learning-notes/devhbEN.html",
+        tags: ["R Package", "Programming", "Handbook"]
     },
     {
         id: 2,
