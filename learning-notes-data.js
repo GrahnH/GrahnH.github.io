@@ -12,11 +12,11 @@ const learningNotesData = [
     },
     {
         id: 2,
-        date: "2025-09-19",
-        title: "Statistical Modeling",
-        content: "Model validation, cross-validation, overfitting prevention, interpreting model diagnostics",
-        link: "#",
-        tags: ["Statistics", "Modeling", "Machine Learning"]
+        date: "2025-10-01",
+        title: "R Plot Collection Part 1.",
+        content: "a brief of visualization using the German Mortality Data 2023",
+        link: "learning-notes/rplotsample.html",
+        tags: ["r", "visualization", "Handbook"]
     },
     {
         id: 3,
