@@ -1,0 +1,477 @@
+---
+title: "R Plot Collection Part 1."
+subtitle: "a brief of visualization using the German Mortality Data 2023"
+output: 
+  rmarkdown::html_document:
+    theme: lumen
+    highlight: tango
+    toc: true
+    toc_float: 
+      collapsed: true
+      smooth_scroll: true
+    toc_depth: 3
+    code_folding: show
+    fig_width: 10
+    fig_height: 6
+    fig_caption: true
+vignette: >
+  %\VignetteIndexEntry{trendtestr-intro-CovidBerlin25}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## About This Document
+
+This is my personal collection of R plotting code, using the German Mortality Data 2023 dataset as practice material. Part 1 focuses on commonly used graph types that I frequently see in scientific articles and publications - basic distributions, geographic visualizations, and comparative plots. This is purely for coding reference and learning different visualization techniques, not for scientific analysis.
+
+reference: Statistischer Bericht:Todesursachen in Deutschland 2023.(o. D.). Statistisches Bundesamt. <https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Gesundheit/Todesursachen/_inhalt.htm#>
+
+```{r message=FALSE}
+#| label: import packages
+#| warning: false
+library(rio)
+library(readxl)
+library(tidyverse) 
+library(Hmisc) 
+library(psych)
+library(lmtest)
+library(ggplot2)
+library(dplyr)
+library(plotluck)
+```
+
+```{r import data}
+#| warning: false
+csv23211 <- read_excel('statistischer-bericht-todesursachen-2120400237005.xlsx', sheet = 'csv-23211-01')
+
+#dataset name: Anzahl nach ausgewählten Todesursachen, Altersgruppen und Geschlecht 2023
+csv23212 <- read_excel('statistischer-bericht-todesursachen-2120400237005.xlsx', sheet = 'csv-23211-02')
+
+#dataset name: je 100 000 Einwohner nach ausgewählten Todesursachen, Altersgruppen und Geschlecht 2023
+csv23213 <- read_excel('statistischer-bericht-todesursachen-2120400237005.xlsx', sheet = 'csv-23211-03')
+```
+
+# 1. General Analysis: Distribution Patterns Using Scatter, Heatmap, and Trend Visualizations
+
+This section presents an overview of mortality patterns across Germany in 2023, examining relationships between causes of death, age groups, and sex through multiple visualization techniques including scatter plots, heatmaps, point plots, and boxplots.
+
+```{r}
+#| message: false
+#| warning: false
+#| paged-print: true
+
+##filt and clean key elements
+csv23212$Wert <- as.numeric(csv23212$Wert)##value
+csv23212$W.mi <- as.numeric(csv23213$Wert)##value
+csv23212$Geschlecht <- as.factor(csv23212$Geschlecht)##sex
+csv23212$Merkmal_3 <- as.factor(csv23212$Merkmal_3)##age
+
+###typ as factor
+primary_category <- sub("^(\\w{1}\\d{2}-\\w{1}\\d{2}).*", "\\1", csv23212$Merkmal_1)
+csv23212s <- subset(csv23212, subset = c(csv23212$Merkmal_1 == primary_category &
+                              csv23212$Merkmal_3 !='Gestorbene insgesamt' &                                      csv23212$Merkmal_1 != 'A00-U85' & 
+                              csv23212$Geschlecht != 'zusammen'))
+
+csv23212s$Merkmal_1 <- as.factor(csv23212s$Merkmal_1)
+
+###
+csv23212s$Geschlecht <- droplevels(csv23212s$Geschlecht)
+csv23212s$Geschlecht <- recode(csv23212s$Geschlecht, "männlich" = "male",
+                               "weiblich" = "female")
+
+### relevel of feature 3: age
+csv23212s <- csv23212s %>%
+  mutate(Merkmal_3 = recode(Merkmal_3,
+                      "Davon im Alter unter 1 Jahren" = "-01",
+                      "Davon im Alter von 1 bis unter 5 Jahren" = "01 - 05",
+                      "Davon im Alter von 5 bis unter 10 Jahren" = "05 - 10",
+                      "Davon im Alter von 10 bis unter 15 Jahren" = "10 - 15",
+                      "Davon im Alter von 15 bis unter 20 Jahren" = "15 - 20",
+                      "Davon im Alter von 20 bis unter 25 Jahren" = "20 - 25",
+                      "Davon im Alter von 25 bis unter 30 Jahren" = "25 - 30",
+                      "Davon im Alter von 30 bis unter 35 Jahren" = "30 - 35",
+                      "Davon im Alter von 35 bis unter 40 Jahren" = "35 - 40",
+                      "Davon im Alter von 40 bis unter 45 Jahren" = "40 - 45",
+                      "Davon im Alter von 45 bis unter 50 Jahren" = "45 - 50",
+                      "Davon im Alter von 50 bis unter 55 Jahren" = "50 - 55",
+                      "Davon im Alter von 55 bis unter 60 Jahren" = "55 - 60",
+                      "Davon im Alter von 60 bis unter 65 Jahren" = "60 - 65",
+                      "Davon im Alter von 65 bis unter 70 Jahren" = "65 - 70",
+                      "Davon im Alter von 70 bis unter 75 Jahren" = "70 - 75",
+                      "Davon im Alter von 75 bis unter 80 Jahren" = "75 - 80",
+                      "Davon im Alter von 80 bis unter 85 Jahren" = "80 - 85",
+                      "Davon im Alter von 85 bis unter 90 Jahren" = "85 - 90",
+                      "Davon im Alter von 90 Jahren und älter" = "90-",
+                      "Gestorbene insgesamt" = "total deaths"))
+
+csv23212s$Merkmal_3 <- fct_relevel(csv23212s$Merkmal_3,"-01", "01 - 05","05 - 10",
+                                   "10 - 15", "15 - 20","20 - 25","25 - 30","30 - 35","35 - 40","40 - 45","45 - 50","50 - 55","55 - 60",
+                                   "60 - 65","65 - 70","70 - 75","75 - 80","80 - 85","85 - 90","90-","total deaths")
+
+str(csv23212s)
+```
+
+## 1.1 Scatter Plot: Sex-based Distribution of Deaths by ICD Categories
+
+**Logarithmic scatter plot comparing mortality counts across ICD-10 classification categories, faceted by sex**
+
+This visualization reveals the overall distribution and magnitude of deaths across different ICD-10 cause categories, separated by male and female populations. The logarithmic transformation allows for better comparison across the wide range of values, from rare conditions to common causes of death. Notable patterns in sex-specific mortality become immediately visible through this side-by-side comparison.
+
+```{r warning=FALSE}
+#Scatter plot von value Distribution of type, facetting by sex
+plotluck(csv23212s, Wert~Merkmal_1 | Geschlecht, opts = plotluck.options(trans.log.thresh =10)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),
+    legend.position = "right") + 
+  labs(
+    title = "Scatter plot of deaths by selected causes and sex, Germany, 2023",
+    y = "Count",
+    x = "ICD",
+    color = "Sex"
+  )
+```
+
+## 1.2 Heatmap: Age-stratified Mortality Patterns by Cause and Sex
+
+**Logarithmically scaled heatmap displaying mortality intensity across age groups, ICD categories, and sex with gradient coloring**
+
+This heatmap provides a comprehensive view of how different causes of death affect various age groups and sexes. The logarithmic color scale (teal to coral) effectively captures the wide range of mortality counts, from single digits to tens of thousands. Clear age-related patterns emerge, showing which conditions predominantly affect younger versus older populations, and highlighting sex-specific vulnerabilities across the lifespan.
+
+```{r warning=FALSE}
+#resharp of table csv23212s
+strbkata <- tibble(
+  'typ' = csv23212s$Merkmal_1,
+  'age' = csv23212s$Merkmal_3,
+  'sex' = csv23212s$Geschlecht,
+  fill = csv23212s$Wert)
+
+strbkata_clean <- strbkata %>% na.omit()
+ggplot(strbkata_clean, aes(x = age, y = typ, fill = fill)) +
+  geom_tile(color = "#ffffff") +
+  scale_fill_gradient2(
+    low = "#317479",
+    mid = "#d0d7e8",
+    high = "#e57259",
+    midpoint = median(log10(strbkata$fill), na.rm = TRUE),
+    trans = "log10",
+    name = "count",
+    breaks = c(1, 10, 100, 1000, 10000),
+    labels = scales::label_log()
+  ) +
+  facet_wrap(~ sex) +
+  labs(
+    title = "Heatmap of deaths by selected causes, age group, and sex, Germany, 2023",
+    x = "Age",
+    y = "ICD"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(family = "Arial", size = 14, hjust = 0.5, vjust = 0.5),
+    axis.text.x = element_text(angle = 90, hjust = 1),
+    legend.position = "right")
+```
+
+## 1.3 Point Plot: Age Progression Trends for Each Cause of Death
+
+**Multi-panel point plot with logarithmic y-axis showing age-related mortality trends, color-coded by sex**
+
+These faceted scatter plots illustrate how mortality from each specific cause changes across the age spectrum. The logarithmic scale on the y-axis accommodates the exponential increase in deaths seen for many conditions in older age groups. The color differentiation between males (coral) and females (teal) allows for immediate comparison of sex-specific age-related mortality patterns within each disease category.
+
+```{r warning=FALSE}
+strbkata_clean <- strbkata_clean %>%
+  mutate(age = factor(age, levels = unique(age)))
+
+ggplot(strbkata_clean, aes(x = age, y = fill)) +
+  geom_point(aes(color = sex),size = 0.8) +
+  scale_color_manual(values = c("male" = "#d78a6d", "female" = "#adc9c9")) +
+  scale_y_log10() +
+  labs(
+    title = "Trend of death counts by age, sex, and cause of death, Germany, 2023",
+    x = "Age",
+    y = "Count",
+    color = "Sex"
+  ) +
+  facet_wrap(~ typ)+
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(angle = 90, hjust = 1, size = 6.5),
+    legend.position = "right"
+  ) 
+```
+
+## 1.4 Boxplot: Statistical Distribution of Mortality Counts by Cause
+
+**Logarithmic boxplot comparing death count distributions across ICD categories, stratified by sex with outlier visualization**
+
+This boxplot provides statistical summaries of mortality distributions for each cause of death category. The boxes show the interquartile range, with medians clearly marked, while outliers are displayed as individual points. The logarithmic scale reveals the full range of variability across age groups for each condition. Sex-based color coding allows for direct comparison of how mortality patterns differ between males and females for each cause category.
+
+```{r warning=FALSE}
+ggplot(strbkata_clean, aes(x = typ, y = fill, fill = sex)) +
+  geom_boxplot(aes(color = sex), 
+               outlier.colour = "#838d93", 
+               outlier.shape = 16,       
+               outlier.size = 1,        
+               notch = FALSE,            
+               notchwidth = 0.5) +
+  scale_color_manual(values = c("male" = "#d78a6d", "female" = "#adc9c9")) +
+  scale_fill_manual(values = c("male" = "#e89b7e", "female" = "#bedada")) + 
+  scale_y_log10() +
+  labs(
+    title = "Boxplot of death counts by cause and sex of death, Germany, 2023",
+    x = "ICD",
+    y = "Count"
+  ) +
+  theme_classic() +
+  theme(
+    axis.text.x = element_text(angle = 90, hjust = 1),
+    legend.position = "right"
+  )
+```
+
+# 2. Geographic Analysis: Regional Distribution Using Choropleth Map and State-level Heatmap
+
+This section examines spatial patterns of mortality across German federal states, utilizing geographic visualizations to identify regional variations in specific causes of death and overall mortality patterns through maps and heatmaps.
+
+```{r import sf, message=FALSE, warning=FALSE}
+library(sf)
+library(rnaturalearth)
+library(rnaturalearthdata)
+```
+
+```{r}
+#| message: false
+#| warning: false
+
+# data import
+deu23 <- read_excel('statistischer-bericht-todesursachen-2120400237005.xlsx', sheet = 'csv-23211-05')
+deu23mi <- read_excel('statistischer-bericht-todesursachen-2120400237005.xlsx', sheet = 'csv-23211-06')
+
+deu23$Gebiet <- as.factor(deu23$Gebiet)
+deu23$Merkmal_1 <- as.factor(deu23$Merkmal_1)
+deu23$Wert <- as.numeric(deu23$Wert)
+deu23$W.mi <- as.numeric(deu23mi$Wert)
+deu23 <- deu23 %>% filter(Merkmal_1 != 'A00-U85')
+
+deu23oh <- subset(deu23, subset = Merkmal_1 == 'V01-V99' & Gebiet != "Deutschland")
+c00 <- data.frame(Region = deu23oh$Gebiet, Anzahl = deu23oh$W.mi)
+
+germany_map <- ne_states(country = "Germany", returnclass = "sf")
+germany_map <- germany_map %>%
+  dplyr::rename(Region = name)
+
+merged_data <- dplyr::left_join(germany_map, c00, by = "Region")
+```
+
+## 2.1 Choropleth Map: Traffic Accident Mortality Rates Across German States
+
+**Gradient-filled geographic map displaying mortality rates per 100,000 inhabitants from transport accidents (ICD V01-V99)**
+
+This choropleth map visualizes the geographic distribution of traffic-related mortality across Germany's federal states. The gradient color scheme (white to blue) represents mortality rates per 100,000 inhabitants, making regional disparities immediately apparent. This visualization helps identify states with higher traffic-related mortality, potentially indicating areas where road safety interventions may be most needed.
+
+```{r warning=FALSE}
+# Plot
+ggplot(data = merged_data) +
+  geom_sf(aes(fill = Anzahl), color = NA) +
+  scale_fill_viridis_c(name = "Anzahl", limits = c(min(c00$Anzahl), max(c00$Anzahl))) +
+  theme_minimal() +
+  labs(title = "Map of mortality rates (per 100,000 inhabitants) from V01–V99, 2023", fill = "rate") +
+  theme(legend.position = "right")+
+  scale_fill_gradient(low = '#ffffff', high = '#55aacc')+
+  theme(
+    axis.text = element_blank(),
+    axis.title = element_blank(),
+    panel.grid = element_blank(),
+    panel.border = element_blank(),
+    plot.margin = margin(0, 0, 0, 0),
+    plot.title = element_text(family = "Arial", size = 14, hjust = 0.5, vjust = 0.5)
+  )
+```
+
+| Example1                      | Example2                      |
+|-------------------------------|-------------------------------|
+| ![](Rplot02.png){width="340"} | ![](Rplot03.png){width="325"} |
+
+## 2.2 Regional Heatmap: Comprehensive State-by-Cause Mortality Matrix
+
+**Tiled heatmap showing mortality intensity across all federal states and ICD cause categories with white-to-red gradient**
+
+This comprehensive heatmap displays the intersection of all federal states (rows) with all ICD-10 cause categories (columns), creating a complete matrix of regional mortality patterns. The white-to-red gradient represents mortality intensity, allowing for quick identification of which causes contribute most significantly to mortality in each state. This visualization enables both vertical comparisons (how one state compares across causes) and horizontal comparisons (how different states are affected by the same cause).
+
+```{r}
+#| warning: false
+#| fig-height: 8
+#| fig-width: 10
+reg05 <- as_tibble(read_excel('2321105.xlsx', sheet = 'Tabelle1'))
+reg05 <- reg05 %>% mutate(Gebiet = as.factor(Gebiet))
+reg05 <- reg05 %>% mutate(`O00-O99` = as.numeric(`O00-O99`))
+datareg <- as.data.frame(reg05)
+long_data <- reg05 %>%
+  pivot_longer(cols = `A00-U85`:`V01-Y98`, 
+               names_to = "ICD", 
+               values_to = "Wert")
+
+library(ggforce)
+
+filtered_dataoh <- long_data %>% filter(ICD != 'A00-U85')
+filtered_dataoh2 <- filtered_dataoh %>% filter(Gebiet != 'Deutschland')
+filtered_dataoh2c <- filtered_dataoh2 %>% na.omit()
+str(filtered_dataoh2)
+
+ggplot(filtered_dataoh2c, aes(x=ICD, y=Gebiet, fill=Wert)) +
+  geom_tile(colour="white") +
+  labs(title = 'Heatmap of deaths by selected causes (ICD) and federal states, Germany, 2023',
+       x = "ICD", y = "Bundesländern")+
+  scale_fill_gradient(low = "#ffffff", high = '#992200')+
+  theme(
+    axis.text.x = element_text(angle = 90, hjust = 1),
+    legend.position = "right"
+  )
+```
+
+# 3. Berlin-focused Analysis: Local Patterns Using Bar Chart and Donut Chart Visualizations
+
+This section provides detailed analysis of mortality patterns specifically in Berlin, comparing local rates to national averages through bar charts and examining the proportional distribution of causes through a donut chart visualization.
+
+```{r}
+#| message: false
+#| warning: false
+#| fig-height: 7
+#| fig-width: 14
+icd_codes <- deu23$Merkmal_1
+icd_first_letter <- substr(icd_codes, 1, 1)
+unique(icd_first_letter)
+deu23$icd.k <- factor(icd_first_letter,
+                      levels = c("A", "B", "C", "D", "E", "F", "G",
+                                 "I", "J", "K", "L", "M", "N", "O", "P",
+                                 "Q", "R", "S", "T", "U", "V", "W", "X", "Y"),
+                      labels = c("Infectious and Parasitic Diseases",
+                                 "Infectious and Parasitic Diseases",
+                                 "Neoplasms",
+                                 "Blood Disorders",
+                                 "Endocrine, Nutritional and Metabolic Diseases",
+                                 "Mental and Behavioural Disorders",
+                                 "Diseases of the Nervous System",
+                                 "Diseases of the Circulatory System",
+                                 "Diseases of the Respiratory System",
+                                 "Diseases of the Digestive System",
+                                 "Diseases of the Skin and Subcutaneous Tissue",
+                                 "Diseases of the Musculoskeletal System and Connective Tissue",
+                                 "Diseases of the Genitourinary System",
+                                 "Pregnancy, Childbirth and the Puerperium",
+                                 "Certain Conditions Originating in the Perinatal Period",
+                                 "Congenital Malformations, Deformations and Chromosomal Abnormalities",
+                                 "Symptoms, Signs and Abnormal Clinical and Laboratory Findings",
+                                 "Injury, Poisoning and Certain Other Consequences of External Causes",
+                                 "Injury, Poisoning and Certain Other Consequences of External Causes",
+                                 "Special Purposes Codes (e.g., COVID-19)",
+                                 "External Causes of Morbidity and Mortality",
+                                 "External Causes of Morbidity and Mortality",
+                                 "External Causes of Morbidity and Mortality",
+                                 "External Causes of Morbidity and Mortality"))
+
+ber23 <- subset(deu23, subset = Gebiet == "Berlin")
+ber23df <- data.frame(Typ = ber23$Merkmal_1, Anzahl = ber23$W.mi, icd = ber23$icd.k)
+
+d23 <- subset(deu23, subset = Gebiet == "Deutschland")
+d23df <- data.frame(Typ = d23$Merkmal_1, Anzahl = d23$W.mi, icd = d23$icd.k)
+
+ber23df$Anzahld <-d23df$Anzahl
+
+summary(ber23df)
+```
+
+## 3.1 Comparative Bar Chart: Berlin vs. National Mortality Rates
+
+**Logarithmic bar chart displaying Berlin's mortality rates by ICD category, color-coded by disease class, with national comparison points and annotated values**
+
+This detailed bar chart compares Berlin's mortality rates (bars) to national German averages (gray points) across all ICD-10 categories. The color coding groups causes by their broader disease classifications, while numerical labels on bars provide precise rate values. The logarithmic y-axis allows for comparison across the full spectrum of mortality rates. This visualization quickly identifies where Berlin's mortality patterns deviate from national trends, highlighting local public health priorities.
+
+```{r fig.height=8, fig.width=20, warning=FALSE}
+ggplot(ber23df, aes(x = Typ, y = Anzahl, fill = icd)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  geom_point(aes(y = Anzahld, color ="Anzahld"),size = 1,shape = 21, fill = "#555555")+
+  scale_color_manual(
+    name = "",
+  values = c("Anzahld" = "#555555"), labels = c( "Anzahld" = "Wert von Deutschland")) +
+  scale_y_log10() +
+  theme_minimal() +
+  labs(title = "Mortality rates per 100,000 inhabitants by selected causes of death in Berlin, 2023, with comparison to Germany",
+       x = "ICD",
+       y = "rate"
+       ) +
+  geom_text(aes(label = round(Anzahl,2)),
+            position = position_stack(vjust = 0.5),
+            size = 2,
+            color = "black") +
+        theme(axis.text.x = element_text(angle = 90 ,hjust = 1, size = 8),
+        plot.title = element_text(hjust = 0.5),legend.position = "top")
+```
+
+## 3.2 Donut Chart: Proportional Distribution of Leading Causes in Berlin
+
+**Polar coordinate donut chart showing proportional breakdown of the top 12 causes of death, with radial labels displaying counts and percentages**
+
+This donut chart provides an intuitive visualization of how different causes of death contribute to Berlin's overall mortality picture. The chart focuses on the top 12 causes, with each segment's size proportional to its contribution to total deaths. Radial labels extending from each segment display both absolute counts and percentage contributions. The color palette distinguishes between different ICD categories, making the chart both informative and visually accessible for understanding the relative burden of different health conditions.
+
+```{r warning=FALSE}
+#| fig-height: 8
+#| fig-width: 8
+filtered_dataoh2ber <- filtered_dataoh %>% filter(Gebiet == 'Berlin')
+ber23dfw <- data.frame(Typ = filtered_dataoh2ber$ICD, Anzahl = filtered_dataoh2ber$Wert)
+ber23dffwnr <- ber23dfw[!is.na(ber23dfw$Anzahl),]
+ber23dffwnr$pre <- ber23dffwnr$Anzahl /sum(ber23dffwnr$Anzahl)
+
+summary(ber23dfw)
+
+#cumulative percentages (top of each rectangle)
+ber23dffwnr$ymax <- cumsum(ber23dffwnr$pre)
+#bottom of each rectangle
+ber23dffwnr$ymin <- c(0, head(ber23dffwnr$ymax, n=-1))
+
+#label position
+ber23dffwnr$labelPosition <- (ber23dffwnr$ymax + ber23dffwnr$ymin) / 2
+#label text
+ber23dffwnr$label <- paste0("\n number: ", ber23dffwnr$Anzahl,"\n rate: ",100*round(ber23dffwnr$pre,2),'%')
+
+ber23dffwnr <- ber23dffwnr %>%
+  mutate(
+    mid = (ymax + ymin) / 2,                 
+    angle = 90 - 360 * mid / max(ymax),      
+    hjust = ifelse(angle < -90, 1, 0),       
+    angle = ifelse(angle < -90, angle + 180, angle) 
+  )
+
+ggplot(ber23dffwnr, aes(ymax=ymax, ymin=ymin, xmax=5, xmin=2.5, fill=Typ)) +
+  geom_rect() +
+  scale_fill_brewer(palette='Set3') +
+  geom_segment(
+    data = ber23dffwnr %>%
+      dplyr::arrange(desc(pre)) %>%
+      dplyr::slice_head(n = 12),
+    aes(x = 5, xend = 5.4, y = mid, yend = mid),
+    inherit.aes = FALSE,
+    color = "grey50"
+  ) +
+  geom_text(
+    data = ber23dffwnr %>%
+      dplyr::arrange(desc(pre)) %>%  
+      dplyr::slice_head(n = 12),       
+    aes(x = 5.5, y = mid, label = label, hjust = hjust,angle = angle),
+    inherit.aes = FALSE,
+    size = 3
+  )+
+  geom_text(
+    data = ber23dffwnr %>%
+      dplyr::arrange(desc(pre)) %>%
+      dplyr::slice_head(n = 12),   
+    aes(x = (5 + 2.5) / 2,    
+        y = (ymin + ymax) / 2,     
+        label = Typ,angle = angle),             
+    inherit.aes = FALSE,
+    size = 2,
+    color = "black"
+  )+
+  coord_polar(theta="y") +
+  xlim(c(0, 6)) +
+  theme_void() +
+  labs(title = 'Proportion of selected causes of death in Berlin, 2023', fill = "ICD")
+```
