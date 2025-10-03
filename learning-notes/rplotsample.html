@@ -9,179 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<style>
-.back-nav-container {
-    background-color: #f8f9fa;
-    padding: 15px 20px;
-    border-bottom: 2px solid #dee2e6;
-    margin-bottom: 20px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-}
 
-.back-button {
-    margin: 0;
-}
-
-.back-button a {
-    display: inline-flex;
-    align-items: center;
-    padding: 10px 20px;
-    background: linear-gradient(135deg, #158cba, #1fb3e0);
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    letter-spacing: 0.025em;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: none;
-    cursor: pointer;
-}
-
-.back-button a:hover {
-    background: linear-gradient(135deg, #127ba3, #1aa5d0);
-    transform: translateY(-1px);
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-}
-
-.back-button a:active {
-    transform: translateY(0);
-}
-
-/* SVG arrow icon */
-.back-button a::before {
-    content: '';
-    width: 16px;
-    height: 16px;
-    margin-right: 8px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 12H5M12 19l-7-7 7-7'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1));
-}
-
-
-.nav-title {
-    color: #6c757d;
-    font-size: 14px;
-    font-weight: 500;
-    margin-left: 15px;
-    vertical-align: middle;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-    .back-nav-container {
-        padding: 12px 16px;
-    }
-    
-    .back-button a {
-        padding: 8px 16px;
-        font-size: 13px;
-    }
-    
-    .back-button a::before {
-        width: 14px;
-        height: 14px;
-        margin-right: 6px;
-    }
-    
-    .nav-title {
-        display: block;
-        margin-left: 0;
-        margin-top: 8px;
-        font-size: 12px;
-    }
-    
-    .back-to-top {
-        bottom: 25px !important;
-        right: 25px !important;
-    }
-}
-
-/* Back to Top Button */
-.back-to-top {
-    position: fixed;
-    bottom: 40px;
-    right: 40px;
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(135deg, #158cba, #1fb3e0);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(20px);
-    z-index: 1000;
-}
-
-.back-to-top.visible {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.back-to-top:hover {
-    background: linear-gradient(135deg, #127ba3, #1aa5d0);
-    transform: translateY(-3px);
-}
-
-.back-to-top:active {
-    transform: translateY(-1px);
-}
-
-/* SVG up arrow icon */
-.back-to-top::before {
-    content: '';
-    width: 20px;
-    height: 20px;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 19V6'/%3E%3Cpath d='M6 12l6-6 6 6'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1));
-}
-</style>
-
-<div class="back-nav-container" style="display: flex; align-items: center; justify-content: space-between;">
-    <div class="back-button">
-        <a href="/index.html">Back to Home</a>
-    </div>
-    <span class="nav-title">Documentation Center</span>
-</div>
-
-<button class="back-to-top" onclick="scrollToTop()"></button>
-
-<script>
-// Show/hide back to top button based on scroll position
-window.addEventListener('scroll', function() {
-    const backToTopButton = document.querySelector('.back-to-top');
-    if (window.pageYOffset > 300) {
-        backToTopButton.classList.add('visible');
-    } else {
-        backToTopButton.classList.remove('visible');
-    }
-});
-
-// Smooth scroll to top function
-function scrollToTop() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-}
-
-</script>
 
 <title>R Plot Collection Part 1.</title>
 
@@ -1954,13 +1782,13 @@ ICD-10 classification categories, faceted by sex</strong></p>
 <p><em>Source: Destatis, Todesursachen 2023</em></p>
 <p>In this figure, death counts are plotted across ICD-10 chapters as a
 horizontal scatter and the panels are split by sex. The horizontal axis
-shows the value (count) and is displayed on a logarithmic scale above
-10, and the vertical axis lists the ICD-10 chapters. Each point denotes
-one age group within its chapter, although age is not mapped to an axis.
-The spread of points within a chapter summarizes how age-specific counts
-are distributed for that cause category, and the side by side panels
-allow a direct comparison of these distributions between male and
-female.</p>
+shows the value (count per 100,000 inhabitants) and is displayed on a
+logarithmic scale above 10, and the vertical axis lists the ICD-10
+chapters. Each point denotes one age group within its chapter, although
+age is not mapped to an axis. The spread of points within a chapter
+summarizes how age-specific counts are distributed for that cause
+category, and the side by side panels allow a direct comparison of these
+distributions between male and female.</p>
 <p><strong>Description</strong></p>
 <p>This horizontal dot plot summarizes, for each ICD-10 chapter, the
 spread of age-specific counts along the count axis. Tight clusters
@@ -1970,13 +1798,12 @@ higher overall counts. Colors distinguish male and female distributions
 within the same ICD-10. Because age is not on an axis, the figure
 characterizes <strong>within-ICD distributions</strong> rather than
 age-specific peaks.</p>
-<p>In this figure, P00–P96 (perinatal conditions) shows the lowest
-overall counts, with the male cluster slightly further left than the
-female; I00–I99 (circulatory diseases) exhibits a broadly even spread
-and the highest maximum among chapters, with a somewhat wider range for
-males; C00–D48 (neoplasms) is similar to I00–I99 with the second-highest
-maximum, but here the female distribution spans a wider range than the
-male.</p>
+<p>In this figure, P00–P96 shows the lowest overall counts, with the
+female cluster slightly further left than the male; I00–I99 exhibits a
+broadly even spread and the highest maximum among chapters, with a
+somewhat wider range for females; C00–D48 is similar to I00–I99 with the
+second-highest maximum, but here the male distribution spans a wider
+range than the female.</p>
 </div>
 <div id="heatmap-age-stratified-mortality-patterns-by-cause-and-sex" class="section level2">
 <h2>1.2 Heatmap: Age-stratified Mortality Patterns by Cause and Sex</h2>
@@ -2561,5 +2388,3 @@ $(document).ready(function ()  {
 
 </body>
 </html>
-
-
