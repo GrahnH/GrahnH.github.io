@@ -616,7 +616,7 @@ body {
 /* Titles inside Personal Notes cards */
 .notes-section .notes-item .doc-title-line a {
   font-size: 17px;
-  font-weight: 650;
+  font-weight: 550;
   color: var(--accent-color);
 }
 
@@ -640,7 +640,7 @@ body {
 .notes-devlog #latestDevLogContainer,
 .notes-news #latestNewsContainer {
   background: rgba(155, 89, 182, 0.06); /* soft accent tint for light mode */
-  border-radius: 4px;
+  border-radius: 1px;
   padding: 10px 12px;
   border-left: 3px solid var(--accent-color);
 }
@@ -869,7 +869,7 @@ body {
     margin-bottom: 16px;
     border: none;
     box-shadow: 0 6px 18px var(--shadow-color);
-    border-radius: 5px;
+    border-radius: 12px;
     padding: 12px 14px 14px 14px;
     background: var(--card-bg);
 }
@@ -935,8 +935,6 @@ body {
 .dark-mode .notes-learning .notes-scroll-area .tag {
     background: rgba(255, 255, 255, 0.06);
 }
-
-
 /* =========================================================
    Latest entry preview box inside Personal Notes cards
    Example usage (Dev Log / Project Updates):
@@ -950,7 +948,7 @@ body {
 .notes-section .latest-entry-box {
     margin-top: 15px;
     padding: 12px 14px;
-    border-radius: 4px;
+    border-radius: 1px;
 
     background: rgba(155, 89, 182, 0.06);   /* soft accent tint (light mode) */
     border-left: 3px solid var(--accent-color);
@@ -958,21 +956,24 @@ body {
     box-shadow: 0 2px 8px var(--shadow-color);
 }
 
+/* Dark mode: slightly stronger tint,但仍保持柔和 */
 .dark-mode .notes-section .latest-entry-box {
-    background: rgba(155, 89, 182, 0.20);
+    background: rgba(155, 89, 182, 0.15);
 }
 
-/* Header line: "📅 Latest: 2025-09-02" */
+/* Header line: "2025-09-02" */
 .notes-section .latest-entry-header {
     color: var(--accent-color);
     font-weight: 700;
-    font-size: 0.85em;
-    margin-bottom: 5px;
+    font-size: 0.75em;
+    margin-bottom: 4px;
 
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
 }
+
+
 .notes-section .latest-entry-header .entry-icon {
     font-size: 1.1em;
     line-height: 1;
@@ -981,6 +982,17 @@ body {
 /* Body text below the header */
 .notes-section .latest-entry-body {
     color: var(--text-secondary);
-    font-size: 0.80em;
-    line-height: 1.4;
+    font-size: 0.90em;
+    line-height: 1.0;
+}
+
+.notes-section .latest-entry-box .latest-entry-header + .latest-entry-body {
+    margin-bottom: 8px;  /* space below each entry body */
+}
+
+/* Extra spacing + optional separator before 2nd+ header */
+.notes-section .latest-entry-box .latest-entry-header:not(:first-of-type) {
+    margin-top: 10px;       /* vertical gap between entries */
+    padding-top: 6px;
+    border-top: 1px solid var(--hover-border);  /* subtle divider line */
 }
