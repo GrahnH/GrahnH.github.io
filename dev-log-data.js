@@ -6,7 +6,7 @@ const devLogData = [
         id: 1,
         date: "2025-09-18",
         title: "Documentation Setup",
-        content: "• Set up GitHub Pages documentation center\n• Added TrendTestR package documentation\n• Implemented scrollable development log",
+        content: "Set up GitHub Pages documentation center with TrendTestR package docs",
         link: "dev-log.html",
         tags: ["Documentation", "GitHub Pages"]
     },
@@ -14,7 +14,7 @@ const devLogData = [
         id: 2,
         date: "2025-09-02",
         title: "CRAN Publication",
-        content: "• trendtestR on CRAN",
+        content: "trendtestR successfully published on CRAN",
         link: "dev-log.html",
         tags: ["R Package", "CRAN", "Release"]
     },
@@ -22,7 +22,7 @@ const devLogData = [
         id: 3,
         date: "2025-08-16",
         title: "Package Finalization",
-        content: "• Packaged trendtestR\n• Passed CRAN-ready checks and rhub multi-platform validation\n• Completed unit testing",
+        content: "Passed CRAN-ready checks and completed unit testing",
         link: "dev-log.html",
         tags: ["R Package", "Testing", "CRAN"]
     },
@@ -30,7 +30,7 @@ const devLogData = [
         id: 4,
         date: "2025-08-02",
         title: "Core Functions Complete",
-        content: "• Finished the explore-series functions of trendtestR\n• Explore modeling functions of trendtestR evaluated and MVP finalized\n• Implemented data type inference and routing logic of trendtestR",
+        content: "Finalized MVP with explore-series and modeling functions",
         link: "dev-log.html",
         tags: ["Development", "Features"]
     },
@@ -38,7 +38,7 @@ const devLogData = [
         id: 5,
         date: "2025-07-10",
         title: "Package Structure",
-        content: "• Completed core functions, migrated to R package structure, and finalized documentation of trendtestR",
+        content: "Migrated to R package structure and finalized documentation",
         link: "dev-log.html",
         tags: ["Development", "Documentation"]
     },
@@ -46,7 +46,7 @@ const devLogData = [
         id: 6,
         date: "2025-07-01",
         title: "Project Initiation",
-        content: "• Initial workflow established of trendtestR",
+        content: "Initial workflow established for trendtestR",
         link: "dev-log.html",
         tags: ["Setup", "Planning"]
     }
