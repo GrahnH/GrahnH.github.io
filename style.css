@@ -811,11 +811,152 @@ body {
     gap: 5px;
   }
 
+    /* ==========================================
+     MOBILE TOOLTIP → SLIDE-IN DRAWER
+     ========================================== */
+  
   .tooltip {
-    width: 90%;
-    left: 5%;
-    transform: translateX(0) translateY(10px);
+    /* Reset positioning */
+    position: fixed;
+    top: 0;
+    left: 0;  /* Always at left: 0 */
+    transform: translateX(-100%);  /* Hidden by transform */
+    
+    /* Full height drawer */
+    width: 280px;
+    max-width: 85vw;
+    height: 100vh;
+    
+    /* Styling */
+    background: var(--card-bg);
+    border-radius: 0;
+    border-top: none;
+    border-right: 3px solid var(--accent-color);
+    padding: 25px 20px;
+    
+    /* Shadow and z-index */
+    box-shadow: 2px 0 20px var(--shadow-color);
+    z-index: 1000;
+    
+    /* Ultra smooth slide animation with GPU acceleration */
+    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+    
+    /* Always display, just hidden by transform */
+    display: block;
+    
+    /* Scrollable if content overflows */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    
+    /* Prevent interaction when hidden */
+    pointer-events: none;
   }
+
+  /* When visible: slide in from left using transform */
+  .tooltip.visible {
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  /* Close button for mobile drawer */
+  .tooltip::before {
+    content: "×";
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 32px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    line-height: 1;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s;
+  }
+
+  .tooltip::before:hover {
+    background: var(--hover-border);
+    color: var(--text-main);
+  }
+
+  /* Adjust tooltip content for mobile drawer */
+  .profile-name {
+    font-size: 20px;
+    margin-top: 15px;
+    padding-right: 40px;  /* Make room for close button */
+  }
+
+  .profile-school {
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  .profile-links {
+    flex-direction: row;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: space-between;
+  }
+
+  .profile-links a {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 0;
+    flex: 1;
+    background: transparent;
+    border: 1.5px solid var(--accent-color);
+    color: var(--accent-color);
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    text-decoration: none;
+  }
+
+  .profile-links a:hover {
+    background: var(--accent-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(21, 140, 186, 0.3);
+  }
+  
+  .profile-links a:active {
+    transform: translateY(0);
+  }
+
+  .profile-bio {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  /* Overlay backdrop when drawer is open - smoother */
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 999;
+    transition: opacity 0.35s ease;
+    will-change: opacity;
+  }
+
+  /* Show backdrop when tooltip is visible */
+  body.profile-open::after {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
 }
 
 /* =========================================================
@@ -953,7 +1094,6 @@ body {
     background: rgba(155, 89, 182, 0.06);   /* soft accent tint (light mode) */
     border-left: 3px solid var(--accent-color);
 
-    box-shadow: 0 2px 8px var(--shadow-color);
 }
 
 /* Dark mode: slightly stronger tint,但仍保持柔和 */
