@@ -98,8 +98,9 @@
         <h2 class="package-title notes-title">📝 Personal Notes & Logs</h2> 
         <p>Development diary, project updates, and personal documentation.</p> 
 
-        <div class="doc-grid"> 
-          <!-- 1. Development Log --> 
+        <!-- UPDATED: Use the new grid class for 1fr 1fr 2fr layout -->
+        <div class="notes-log-grid"> 
+          <!-- 1. Development Log (Smaller Card) --> 
           <div class="doc-item notes-item"> 
             <div class="doc-title-line"> 
               <a href="dev-log.html">Development Log</a> 
@@ -113,57 +114,65 @@
             <div id="latestDevLogContainer">
               <!-- JS Renders 4 latest vertical cards here (Original logic kept) -->
             </div>
+            <!-- Restored View All Logs link -->
             <div style="text-align: right; margin-top: 10px;">
               <a href="dev-log.html" class="view-all-link">View All Logs →</a>
             </div>
           </div> 
 
-          <!-- 2. Project Update and News --> 
+          <!-- 2. Project Update and News (Smaller Card) --> 
           <div class="doc-item notes-item"> 
             <div class="doc-title-line">
                 <a href="#">Project Updates and News</a> 
             </div>
             <div class="doc-description">Status updates and milestone tracking</div> 
+            <!-- Added vertical filler space to align height with Dev Log -->
+            <div style="flex-grow: 1;"></div> 
           </div> 
 
-          <!-- 3. Learning Notes (with nested Search & Scroll Area) --> 
+          <!-- 3. Learning Notes (Larger Card - occupies 2fr) --> 
           <div class="doc-item notes-item"> 
             <a href="learning-notes-archive.html">Learning Notes</a> 
             <div class="doc-description">Technical notes and learning resources</div> 
             
-         
+            <!-- Search Input Box -->
             <div style="margin-top: 15px;"> 
               <input type="text" id="notesSearchInput" placeholder="Search notes..." class="search-input"> 
             </div> 
 
-           
+            <!-- === 1. Default State: Recent Notes Area (Display Recent Notes) === --> 
             <div id="recentNotesArea" style="margin-top: 15px;"> 
               <div class="latest-entry-title notes-area-title"> 
-                📚 Recent Notes 
+                📚 Recent Notes (Top 3) 
               </div> 
-              
+              <!-- Container: Vertical scroll, limited height -->
               <div id="recentNotesContainer" class="notes-scroll-area">
                   <!-- JS Renders 3 latest vertical cards here -->
               </div> 
+              <!-- Restored View All Notes link -->
               <div style="text-align: right; margin-top: 10px;">
                 <a href="learning-notes-archive.html" class="view-all-link">View All Notes →</a>
               </div>
             </div> 
 
-          
+            <!-- === 2. Search State: Search Results Area - Hidden by Default === -->
             <div id="searchResultsArea" style="margin-top: 15px; display: none;"> 
               <div class="latest-entry-title notes-area-title"> 
                 🔍 Search Results 
                 <span id="resultCount" style="font-size: 0.8em; color: var(--text-secondary); font-weight: 400;"></span>
               </div> 
-           
+              <!-- Container: Vertical scroll, shows all search results -->
               <div id="searchResultsContainer" class="notes-scroll-area">
                   <!-- JS Renders all matching vertical cards here -->
               </div> 
-           
+              <!-- No results message -->
               <div id="noSearchResults" class="no-results" style="display: none;"> 
                 No notes found matching your search.
               </div> 
+              <!-- Retaining View All Notes link -->
+              <div style="text-align: right; margin-top: 10px;">
+                <a href="learning-notes-archive.html" class="view-all-link">View All Notes →</a>
+              </div>
             </div> 
 
           </div> 
