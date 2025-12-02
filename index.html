@@ -45,7 +45,8 @@
 
     <nav class="nav-links"> 
       <a href="index.html" class="active">Home</a> 
-      <a href="#">Learning Notes</a> 
+      <!-- LINK UPDATED to archive page -->
+      <a href="learning-notes-archive.html">Learning Notes</a> 
       <a href="dev-log.html">Dev Log</a> 
       <!-- Dark Mode Toggle Button -->
       <div class="mode-toggle" id="darkModeToggle"></div>
@@ -137,33 +138,35 @@
             </div> 
           </div> 
 
-          <!-- 3. Learning Notes (with nested Search) --> 
+          <!-- 3. Learning Notes (with nested Search & New Scroll) --> 
           <div class="doc-item notes-item"> 
-            <a href="learning-notes.html">Learning Notes</a> 
+            <!-- LINK UPDATED to archive page -->
+            <a href="learning-notes-archive.html">Learning Notes</a> 
             <div class="doc-description">Technical notes and learning resources</div> 
             
-            <!-- Search Input (Moved here from the top) -->
+            <!-- Search Input -->
             <div style="margin-top: 15px;"> 
               <input type="text" id="notesSearchInput" placeholder="Search notes..." class="search-input"> 
             </div> 
 
-            <!-- Recent Notes Preview --> 
+            <!-- Recent Notes Preview - Horizontal Scroll --> 
             <div style="margin-top: 15px;" id="recentNotesPreview"> 
-              <div class="latest-entry-title" style="margin-bottom: 10px; border-bottom: 1px solid var(--hover-border); padding-bottom: 5px;"> 
-                📚 Recent Notes 
+              <div class="latest-entry-title" style="margin-bottom: 10px; padding-bottom: 5px;"> 
+                📚 Recent Notes (Scrollable) 
               </div> 
-              <div id="recentNotesContainer">
-                  <!-- JS Renders Recent Notes here (as before) -->
+              <div id="recentNotesContainer" class="notes-scroll-container">
+                  <!-- JS Renders Scroll Cards here -->
+                  <!-- 提示：此处将被 script.js 渲染的 scroll-card 填充 -->
               </div> 
             </div> 
 
-            <!-- Search Results (Hidden by default) -->
+            <!-- Search Results (Hidden by default, will use standard vertical display) -->
             <div style="margin-top: 15px; display: none;" id="searchResults"> 
               <div class="latest-entry-title" style="margin-bottom: 10px; border-bottom: 1px solid var(--hover-border); padding-bottom: 5px;"> 
                 🔍 Search Results 
               </div> 
               <div id="searchResultsContainer">
-                  <!-- JS Renders Search Results here -->
+                  <!-- JS Renders Vertical Search Results here -->
               </div> 
             </div> 
 
@@ -193,11 +196,6 @@
         </div> 
       </div> 
       
-      <!--
-        NOTE: The following old sections (Recent Learning Notes and Latest Dev Updates) 
-        were removed as their functionality is now integrated/nested within the new 'Personal Notes' card.
-      -->
-      
   </div>
 
   <!-- Footer Section -->
@@ -212,7 +210,7 @@
   <script src="learning-notes-data.js"></script>
   <!-- 2. Dev Log Data -->
   <script src="dev-log-data.js"></script>
-  <!-- 3. Logic Script (Updated for Dark Mode init/toggle) -->
+  <!-- 3. Logic Script (Updated for Dark Mode init/toggle, Search Logic, and Scroll Logic) -->
   <script src="script.js"></script>
   
   <script>
