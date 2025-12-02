@@ -4,6 +4,38 @@
  * @param {string} containerId - The ID of the target HTML element container.
  * @param {boolean} isSlider - (UNUSED for this specific fix) Flag for slider styling.
  */
+
+/**
+ * Renders dev log in simple format (similar to Project Updates)
+ */
+function renderDevLogSimple(logsData, containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    container.innerHTML = '';
+    
+    if (!logsData || logsData.length === 0) {
+        container.innerHTML = '<div style="color:#999; padding:10px;">No entries available</div>';
+        return;
+    }
+
+    logsData.forEach(log => {
+        const entry = document.createElement('div');
+        entry.className = 'latest-entry-box';
+        
+        entry.innerHTML = `
+            <div class="latest-entry-header">${log.date}</div>
+            <div class="latest-entry-body">
+                <div style="color: #8a8a8a; font-size: 0.85em; line-height: 1.4;">
+                    • <strong>${log.title}</strong><br>
+                    ${log.content}
+                </div>
+            </div>
+        `;
+        
+        container.appendChild(entry);
+    });
+}
 function renderNotesPreview(notesData, containerId, isSlider = false) {
     const container = document.getElementById(containerId);
     if (!container) return; // Exit if container not found
@@ -132,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 2. Load Dev Log (Original logic maintained, limited to 4)
     const devLogs = window.devLogData || [];
-    const recentDevLogs = devLogs.slice(0, 4); 
+    const recentDevLogs = devLogs.slice(0, 2); 
     renderNotesPreview(recentDevLogs, 'latestDevLogContainer');
 
     // 3. Bind Search Events
