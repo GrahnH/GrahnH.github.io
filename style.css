@@ -157,6 +157,45 @@
     display: flex;
     flex-direction: column;
 }
+/* --- PACKAGE/SECTION STYLES --- */
+.package-section {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 40px;
+    box-shadow: 0 6px 15px var(--shadow-color);
+    border: 1px solid var(--hover-border);
+}
+
+.package-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--text-main);
+}
+
+.package-section > p {
+    color: var(--text-secondary);
+    margin-bottom: 25px;
+}
+
+/* --- DOCUMENT GRID --- */
+.doc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.doc-item {
+    padding: 20px;
+    border-radius: 10px;
+    background-color: var(--header-bg); /* Slightly different background for items */
+    border: 1px solid var(--hover-border);
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+    display: flex;
+    flex-direction: column;
+}
 
 .doc-item:hover {
     transform: translateY(-3px);
@@ -187,7 +226,41 @@
     color: var(--text-secondary);
     margin-top: 5px;
 }
-/* --- END DOC ITEM STYLES (RESTORED) --- */
+
+/* --- BADGE STYLES --- */
+.status-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: white; /* Default to white text on badges */
+    margin-left: 5px;
+}
+
+.available {
+    background: #2ecc71; /* Green */
+}
+
+.coming-soon-badge {
+    background: #f1c40f; /* Yellow */
+    color: #34495e; /* Dark text for yellow badge */
+}
+
+.r-package {
+    background: #e74c3c; /* Red */
+}
+
+.vignette-label {
+    background: #3498db; /* Blue */
+}
+
+/* Lumen label is set at the top */
+
+.doc-item.coming-soon {
+    opacity: 0.6;
+}
 
 
 /* --- BADGE STYLES --- */
@@ -227,6 +300,32 @@
     opacity: 0.6;
 }
 
+.notes-log-grid-stack {
+    display: grid;
+    /* Two columns: Left (stack) 40%, Right (Learning Notes) 60% */
+    grid-template-columns: 40% 60%;
+    gap: 20px;
+}
+
+.col-stack {
+    display: flex;
+    flex-direction: column;
+    /* Ensures Dev Log and Project Update cards take up the full column height */
+    justify-content: space-between; 
+    gap: 20px; /* Spacing between Dev Log and Project Update */
+}
+
+/* Responsive adjustment for the notes grid */
+@media (max-width: 992px) {
+    .notes-log-grid-stack {
+        /* On tablets, switch back to a single column */
+        grid-template-columns: 1fr;
+    }
+    .col-stack {
+        /* When stacked, let the cards flow naturally */
+        flex-direction: column;
+    }
+}
 /* --- FOOTER STYLES --- */
 .site-footer {
     text-align: center;
