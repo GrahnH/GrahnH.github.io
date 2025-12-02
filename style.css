@@ -869,7 +869,7 @@ body {
     margin-bottom: 16px;
     border: none;
     box-shadow: 0 6px 18px var(--shadow-color);
-    border-radius: 12px;
+    border-radius: 5px;
     padding: 12px 14px 14px 14px;
     background: var(--card-bg);
 }
@@ -934,4 +934,53 @@ body {
 
 .dark-mode .notes-learning .notes-scroll-area .tag {
     background: rgba(255, 255, 255, 0.06);
+}
+
+
+/* =========================================================
+   Latest entry preview box inside Personal Notes cards
+   Example usage (Dev Log / Project Updates):
+   <div class="latest-entry-box">
+     <div class="latest-entry-header">📅 Latest: 2025-09-02</div>
+     <div class="latest-entry-body"> ... summary text ... </div>
+   </div>
+   ========================================================= */
+
+/* Outer box */
+.notes-section .latest-entry-box {
+    margin-top: 15px;
+    padding: 12px 14px;
+    border-radius: 4px;
+
+    background: rgba(155, 89, 182, 0.06);   /* soft accent tint (light mode) */
+    border-left: 3px solid var(--accent-color);
+
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.dark-mode .notes-section .latest-entry-box {
+    background: rgba(155, 89, 182, 0.20);
+}
+
+/* Header line: "📅 Latest: 2025-09-02" */
+.notes-section .latest-entry-header {
+    color: var(--accent-color);
+    font-weight: 700;
+    font-size: 0.85em;
+    margin-bottom: 5px;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.notes-section .latest-entry-header .entry-icon {
+    font-size: 1.1em;
+    line-height: 1;
+}
+
+/* Body text below the header */
+.notes-section .latest-entry-body {
+    color: var(--text-secondary);
+    font-size: 0.80em;
+    line-height: 1.4;
 }
