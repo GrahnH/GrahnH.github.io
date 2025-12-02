@@ -815,41 +815,34 @@ body {
      MOBILE TOOLTIP → SLIDE-IN DRAWER
      ========================================== */
   
+  @media (max-width: 600px) {
   .tooltip {
     /* Reset positioning */
     position: fixed;
     top: 0;
-    left: 0;  /* Always at left: 0 */
-    transform: translateX(-100%);  /* Hidden by transform */
-    
-    /* Full height drawer */
+    left: 0;
+    transform: translateX(-100%);  /* Hidden off-screen */
+
     width: 280px;
     max-width: 85vw;
     height: 100vh;
-    
-    /* Styling */
     background: var(--card-bg);
     border-radius: 0;
     border-top: none;
     border-right: 3px solid var(--accent-color);
     padding: 25px 20px;
-    
-    /* Shadow and z-index */
+
     box-shadow: 2px 0 20px var(--shadow-color);
     z-index: 1000;
-    
-    /* Ultra smooth slide animation with GPU acceleration */
-    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    /* IMPORTANT: disable initial animation & transition */
+    animation: none;           /* override desktop fadeIn */
+    transition: none;          /* do NOT animate transform on load */
+
     will-change: transform;
-    
-    /* Always display, just hidden by transform */
     display: block;
-    
-    /* Scrollable if content overflows */
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    
-    /* Prevent interaction when hidden */
     pointer-events: none;
   }
 
@@ -857,6 +850,9 @@ body {
   .tooltip.visible {
     transform: translateX(0);
     pointer-events: auto;
+
+    /* Only now enable smooth slide animation */
+    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   /* Close button for mobile drawer */
