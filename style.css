@@ -18,6 +18,11 @@
   --toggle-bg: #e9ecef; /* Light gray toggle background */
   --toggle-handle: #fff;
   --footer-text: #6c757d;
+  /* New: Preview Box Colors */
+  --preview-bg: #f5f5f5; /* Light grey background for preview */
+  --preview-border: var(--accent-color);
+  --preview-title: var(--accent-color);
+  --preview-text: #5a5a5a;
 }
 
 .dark-mode {
@@ -35,6 +40,11 @@
   --toggle-bg: #495057;
   --toggle-handle: #fff;
   --footer-text: #adb5bd;
+  /* New: Dark Mode Preview Box Colors */
+  --preview-bg: #3c4146; 
+  --preview-border: var(--accent-color);
+  --preview-title: var(--accent-color);
+  --preview-text: #ced4da;
 }
 
 
@@ -46,7 +56,6 @@ body {
   max-width: 1000px; 
   margin: 0 auto; 
   padding: 20px; 
-  /* Using a subtle, flat background typical of clean themes */
   background: var(--bg-start); 
   min-height: 100vh; 
   transition: background-color 0.4s, color 0.4s;
@@ -157,6 +166,9 @@ body {
     border: 3px solid var(--accent-color);
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     transition: transform 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .logo:hover {
@@ -245,111 +257,32 @@ body {
     margin-top: 5px;
 }
 
-/* Search Section */
-.search-container {
-    margin-bottom: 30px;
-    position: relative;
-}
-
+/* --- Search Input (Moved inside Card) --- */
 .search-input {
     width: 100%;
-    padding: 15px 20px;
-    border-radius: 12px;
+    padding: 8px 12px;
+    border-radius: 20px;
     /* Light border for clean look */
     border: 1px solid #ced4da; 
-    font-size: 16px;
-    transition: all 0.3s ease;
+    font-size: 13px;
+    outline: none; 
+    transition: border-color .3s ease, box-shadow 0.3s;
     box-sizing: border-box;
-    background: var(--card-bg);
+    background: var(--header-bg); /* Use lighter background for nested input */
     color: var(--text-main);
 }
 
 .search-input:focus {
-    outline: none;
     border-color: var(--accent-color);
-    box-shadow: 0 0 0 0.25rem rgba(21, 140, 186, 0.25); /* Bootstrap focus shadow effect */
+    box-shadow: 0 0 0 0.15rem rgba(21, 140, 186, 0.25); /* Focus shadow effect */
 }
 .dark-mode .search-input {
     border: 1px solid var(--hover-border);
 }
 
+/* Search Results Area - Now primarily handled by nested divs */
 
-/* Search Results Area */
-.search-results-section {
-    display: none; 
-    margin-bottom: 40px;
-    /* Using card-bg for a cohesive look */
-    background: var(--card-bg); 
-    padding: 20px;
-    border-radius: 15px;
-    border: 1px solid var(--hover-border);
-}
-
-.section-title {
-    font-size: 20px;
-    color: var(--text-main);
-    margin-bottom: 20px;
-    border-left: 4px solid var(--accent-color);
-    padding-left: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* SLIDER STYLES (Horizontal Scroll) */
-.search-slider-container {
-    display: flex;
-    overflow-x: auto;
-    gap: 20px;
-    padding-bottom: 15px;
-    scrollbar-width: thin; 
-    scrollbar-color: var(--accent-color) var(--hover-border);
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-}
-
-/* Custom Scrollbar for Webkit (Chrome, Safari) */
-.search-slider-container::-webkit-scrollbar {
-    height: 8px;
-}
-.search-slider-container::-webkit-scrollbar-track {
-    background: var(--hover-border);
-    border-radius: 4px;
-}
-.search-slider-container::-webkit-scrollbar-thumb {
-    background: var(--accent-color);
-    border-radius: 4px;
-}
-
-/* Ensure cards in slider have fixed width */
-.search-slider-container .note-card {
-    min-width: 300px;
-    max-width: 350px;
-    flex-shrink: 0;
-}
-
-/* View All Link */
-.view-all-link {
-    font-size: 14px;
-    color: var(--accent-color);
-    text-decoration: none;
-    cursor: pointer;
-    /* Use lighter shade for link background */
-    background: rgba(21, 140, 186, 0.1);
-    padding: 5px 12px;
-    border-radius: 15px;
-    transition: all 0.2s;
-}
-.dark-mode .view-all-link {
-    background: rgba(59, 154, 195, 0.2);
-}
-
-.view-all-link:hover {
-    background: var(--accent-color);
-    color: white;
-}
-
-/* Common Card Styles */
+/* Common Card Styles (Retained for consistency) */
 .notes-grid { 
   display: grid; 
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
@@ -376,66 +309,8 @@ body {
   box-shadow: 0 6px 20px var(--shadow-color); 
   border-color: var(--accent-color); /* Hover highlights with accent color */
 } 
+/* ... other note-card sub-styles remain ... */
 
-.note-date { 
-  font-size: 12px; 
-  color: var(--text-label); 
-  margin-bottom: 10px; 
-  font-weight: 600; 
-  text-transform: uppercase; 
-  letter-spacing: 0.5px; 
-} 
-
-.note-title { 
-  font-size: 18px; 
-  font-weight: 700; 
-  color: var(--text-main); 
-  margin: 0 0 10px 0; 
-  line-height: 1.4; 
-} 
-
-.note-preview { 
-  font-size: 14px; 
-  color: var(--text-secondary); 
-  line-height: 1.6; 
-  margin-bottom: 20px; 
-  flex-grow: 1; 
-  display: -webkit-box; 
-  -webkit-line-clamp: 4; 
-  -webkit-box-orient: vertical; 
-  overflow: hidden; 
-} 
-
-.tags { 
-  display: flex; 
-  gap: 8px; 
-  flex-wrap: wrap; 
-  margin-top: auto; 
-} 
-
-.tag { 
-  background: var(--hover-border); 
-  color: var(--text-secondary); 
-  padding: 4px 10px; 
-  border-radius: 6px; 
-  font-size: 11px; 
-  font-weight: 600; 
-  transition: all 0.2s; 
-  cursor: pointer; 
-} 
-
-.tag:hover { 
-  background: var(--accent-color); 
-  color: #fff; 
-}
-
-/* No Results */
-.no-results {
-    display: none;
-    text-align: center;
-    padding: 40px;
-    color: var(--text-secondary);
-}
 
 /* --- PACKAGE SECTION STYLES --- */
 .package-section {
@@ -447,8 +322,11 @@ body {
     /* Add a subtle top border for more structure, similar to Bootstrap cards */
     border-top: 4px solid var(--accent-color);
 }
-.dark-mode .package-section {
-    border-top-color: var(--accent-color);
+
+.package-section.notes-section {
+    /* Use a slightly different accent for the Personal Notes section top border if desired, 
+       but sticking to primary for Lumen consistency. */
+    border-top: 4px solid var(--accent-color); 
 }
 
 .package-title {
@@ -474,105 +352,100 @@ body {
 }
 
 .doc-item {
-    background: var(--header-bg); /* Use the same color as header/main card */
+    background: var(--header-bg); 
     padding: 15px;
     border-radius: 10px;
-    /* Use a left border for a clean, structural divider */
     border-left: 4px solid var(--text-label); 
-    border-top: 1px solid var(--hover-border); /* Subtle top line */
+    border-top: 1px solid var(--hover-border); 
     transition: all 0.2s;
 }
 
 .doc-item:hover {
-    /* Highlight the left border on hover */
     border-left-color: var(--accent-color);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+/* ... doc-item sub-styles remain ... */
+
+
+/* --- LATEST ENTRY PREVIEW STYLES --- */
+.latest-entry-preview {
+    margin-top: 15px; 
+    padding: 12px; 
+    background: var(--preview-bg); 
+    border-radius: 8px; /* Slightly more rounded */
+    border-left: 4px solid var(--preview-border); 
+    transition: background 0.3s;
 }
 
-.doc-item a {
-    font-weight: 600;
-    color: var(--text-main);
+.latest-entry-title {
+    color: var(--preview-title); 
+    font-weight: bold; 
+    font-size: 0.85em; 
+    margin-bottom: 5px;
+}
+
+.latest-entry-content {
+    color: var(--preview-text); 
+    font-size: 0.8em; 
+    line-height: 1.5; 
+}
+
+.full-log-link {
+    text-align: right; 
+    margin-top: 8px;
+}
+
+.full-log-link a {
+    color: var(--accent-color); 
+    font-size: 0.75em; 
+    font-style: italic;
     text-decoration: none;
-    transition: color 0.2s;
+    font-weight: 500;
 }
-
-.doc-item a:hover {
-    color: var(--accent-color);
-}
-
-.doc-description {
-    font-size: 13px;
-    color: var(--text-label);
-    margin-top: 5px;
-}
-
-.doc-title-line {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-/* Status Badges - Using more standard, muted colors for professional look */
-.status-badge {
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: white; 
-}
-
-.available {
-    background: #28a745; /* Bootstrap Success Green */
-}
-
-.coming-soon-badge {
-    background: #ffc107; /* Bootstrap Warning Yellow */
-    color: #343a40; 
-}
-
-.r-package {
-    background: #dc3545; /* Bootstrap Danger Red */
-}
-
-.vignette-label {
-    background: var(--accent-color); /* Primary Blue */
-}
-
-.manual-label {
-    background: #6f42c1; /* Bootstrap Purple */
-}
-
-.doc-item.coming-soon {
-    opacity: 0.6;
-}
-
-/* --- FOOTER STYLES --- */
-.site-footer {
-    text-align: center;
-    padding: 30px 0 10px 0;
-    margin-top: 60px;
-    font-size: 13px;
-    color: var(--footer-text); 
-    border-top: 1px solid var(--hover-border);
-}
-
-.site-footer a {
-    color: var(--accent-color);
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.2s;
-}
-
-.site-footer a:hover {
+.full-log-link a:hover {
     text-decoration: underline;
 }
 
-.site-footer .separator {
-    margin: 0 8px;
-    color: var(--text-label);
+/* --- NEW: Horizontal Scroll Container for Recent Notes --- */
+.notes-scroll-container {
+    display: flex; /* Enable flex layout */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    padding-bottom: 10px; /* Space for scrollbar */
+    gap: 15px; /* Spacing between cards */
+    /* Hide scrollbar visually on some browsers (optional, but cleaner) */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.notes-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Individual Scroll Card Style */
+.scroll-card {
+    flex: 0 0 220px; /* Fixed width for each card */
+    background: var(--card-bg); /* Use main card BG for contrast */
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid var(--hover-border);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.scroll-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--shadow-color);
+}
+.dark-mode .scroll-card {
+    background: var(--preview-bg);
+}
+
+/* --- Status Badges and Footer styles remain --- */
+
 
 /* Responsive */
 @media (max-width: 600px) { 
@@ -589,7 +462,8 @@ body {
   }
 
   .search-slider-container .note-card {
-      min-width: 85%; 
+      min-width: 90%; 
+      max-width: 90%;
   }
   
   .package-title {
@@ -600,7 +474,7 @@ body {
 
   .tooltip {
       width: 90%;
-      left: 5%;
-      transform: translateX(0) translateY(10px);
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
   }
 }
