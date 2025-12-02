@@ -2,36 +2,39 @@
 /* --- LIGHT/DARK MODE VARIABLES --- */
 /* ------------------------------------ */
 :root {
-  /* Light Mode Defaults */
-  --bg-start: #f5f7fa;
-  --bg-end: #c3cfe2;
+  /* Lumen-inspired Light Mode Defaults (Clean, Bootstrap-like, Blue/Cyan Accent) */
+  --accent-lumen: #158cba; /* Lumen Primary Blue */
+  
+  --bg-start: #f8f9fa; /* Very Light Gray/Bootstrap Body */
+  --bg-end: #f8f9fa;   /* Solid background for cleaner look, less gradient */
   --header-bg: #fff;
   --card-bg: #fff;
-  --text-main: #2c3e50;
-  --text-secondary: #7f8c8d;
-  --text-label: #95a5a6;
-  --accent-color: #8e44ad;
-  --hover-border: rgba(142, 68, 173, 0.2);
-  --shadow-color: rgba(0,0,0,0.08);
-  --toggle-bg: #e0e0e0;
+  --text-main: #343a40; /* Darker text for readability */
+  --text-secondary: #6c757d; /* Muted gray for secondary text */
+  --text-label: #adb5bd; /* Lighter gray for labels/dates */
+  --accent-color: var(--accent-lumen);
+  --hover-border: rgba(21, 140, 186, 0.3); /* Lighter border based on Lumen accent */
+  --shadow-color: rgba(0,0,0,0.1); /* Slightly stronger shadow */
+  --toggle-bg: #e9ecef; /* Light gray toggle background */
   --toggle-handle: #fff;
-  --footer-text: #7f8c8d; /* Footer specific text color */
+  --footer-text: #6c757d;
 }
 
 .dark-mode {
-  --bg-start: #1c1c1c;
-  --bg-end: #2c2c2c;
-  --header-bg: #2d2d2d;
-  --card-bg: #3c3c3c;
-  --text-main: #ecf0f1;
-  --text-secondary: #bdc3c7;
-  --text-label: #7f8c8d;
-  --accent-color: #9b59b6; /* slightly brighter purple for dark mode */
-  --hover-border: rgba(155, 89, 182, 0.4);
-  --shadow-color: rgba(0,0,0,0.4);
-  --toggle-bg: #555;
-  --toggle-handle: #ccc;
-  --footer-text: #95a5a6; /* Brighter gray for dark mode footer */
+  /* Adapted Dark Mode for Lumen look (Clean dark surface) */
+  --bg-start: #212529; /* Dark background - Bootstrap Dark */
+  --bg-end: #343a40;   /* Slightly darker end for mild gradient */
+  --header-bg: #212529;
+  --card-bg: #2d3237; /* Slightly lighter card for contrast */
+  --text-main: #f8f9fa;
+  --text-secondary: #ced4da;
+  --text-label: #adb5bd;
+  --accent-color: #3b9ac3; /* Brighter blue/cyan for contrast in dark mode */
+  --hover-border: rgba(59, 154, 195, 0.4);
+  --shadow-color: rgba(0,0,0,0.6);
+  --toggle-bg: #495057;
+  --toggle-handle: #fff;
+  --footer-text: #adb5bd;
 }
 
 
@@ -43,7 +46,8 @@ body {
   max-width: 1000px; 
   margin: 0 auto; 
   padding: 20px; 
-  background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%); 
+  /* Using a subtle, flat background typical of clean themes */
+  background: var(--bg-start); 
   min-height: 100vh; 
   transition: background-color 0.4s, color 0.4s;
   color: var(--text-main);
@@ -106,6 +110,12 @@ body {
     transform: translateX(20px); 
     background: #fff;
 }
+.mode-toggle.active::after {
+    transform: translateX(20px); 
+}
+.mode-toggle.active {
+    background: var(--accent-color);
+}
 
 
 .nav-links { 
@@ -143,6 +153,7 @@ body {
     height: 60px;
     border-radius: 50%;
     overflow: hidden;
+    /* Updated border color to new accent */
     border: 3px solid var(--accent-color);
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     transition: transform 0.3s;
@@ -215,8 +226,9 @@ body {
 }
 
 .profile-links a {
+    /* Use accent color for links */
     font-size: 14px;
-    color: #3498db; /* keeping link blue */
+    color: var(--accent-color); 
     text-decoration: none;
     font-weight: 600;
     transition: color 0.2s;
@@ -243,7 +255,8 @@ body {
     width: 100%;
     padding: 15px 20px;
     border-radius: 12px;
-    border: 2px solid var(--hover-border);
+    /* Light border for clean look */
+    border: 1px solid #ced4da; 
     font-size: 16px;
     transition: all 0.3s ease;
     box-sizing: border-box;
@@ -254,14 +267,19 @@ body {
 .search-input:focus {
     outline: none;
     border-color: var(--accent-color);
-    box-shadow: 0 0 0 4px rgba(142, 68, 173, 0.1);
+    box-shadow: 0 0 0 0.25rem rgba(21, 140, 186, 0.25); /* Bootstrap focus shadow effect */
 }
+.dark-mode .search-input {
+    border: 1px solid var(--hover-border);
+}
+
 
 /* Search Results Area */
 .search-results-section {
     display: none; 
     margin-bottom: 40px;
-    background: var(--header-bg); /* Use a slightly lighter bg for sections */
+    /* Using card-bg for a cohesive look */
+    background: var(--card-bg); 
     padding: 20px;
     border-radius: 15px;
     border: 1px solid var(--hover-border);
@@ -316,13 +334,14 @@ body {
     color: var(--accent-color);
     text-decoration: none;
     cursor: pointer;
-    background: rgba(142, 68, 173, 0.1);
+    /* Use lighter shade for link background */
+    background: rgba(21, 140, 186, 0.1);
     padding: 5px 12px;
     border-radius: 15px;
     transition: all 0.2s;
 }
 .dark-mode .view-all-link {
-    background: rgba(155, 89, 182, 0.15);
+    background: rgba(59, 154, 195, 0.2);
 }
 
 .view-all-link:hover {
@@ -353,9 +372,9 @@ body {
 } 
 
 .note-card:hover { 
-  transform: translateY(-5px); 
-  box-shadow: 0 8px 25px var(--shadow-color); 
-  border-color: var(--hover-border); 
+  transform: translateY(-3px); /* Less dramatic hover for cleaner look */
+  box-shadow: 0 6px 20px var(--shadow-color); 
+  border-color: var(--accent-color); /* Hover highlights with accent color */
 } 
 
 .note-date { 
@@ -425,6 +444,11 @@ body {
     border-radius: 15px;
     box-shadow: 0 5px 20px var(--shadow-color);
     margin-bottom: 40px;
+    /* Add a subtle top border for more structure, similar to Bootstrap cards */
+    border-top: 4px solid var(--accent-color);
+}
+.dark-mode .package-section {
+    border-top-color: var(--accent-color);
 }
 
 .package-title {
@@ -450,11 +474,19 @@ body {
 }
 
 .doc-item {
-    background: var(--header-bg); /* Use a slightly different shade */
+    background: var(--header-bg); /* Use the same color as header/main card */
     padding: 15px;
     border-radius: 10px;
-    border-left: 5px solid var(--accent-color);
+    /* Use a left border for a clean, structural divider */
+    border-left: 4px solid var(--text-label); 
+    border-top: 1px solid var(--hover-border); /* Subtle top line */
     transition: all 0.2s;
+}
+
+.doc-item:hover {
+    /* Highlight the left border on hover */
+    border-left-color: var(--accent-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .doc-item a {
@@ -480,7 +512,7 @@ body {
     justify-content: space-between;
 }
 
-/* Status Badges - Keeping bright colors for contrast */
+/* Status Badges - Using more standard, muted colors for professional look */
 .status-badge {
     padding: 4px 8px;
     border-radius: 4px;
@@ -488,28 +520,28 @@ body {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: white; /* Default to white text on badges */
+    color: white; 
 }
 
 .available {
-    background: #2ecc71; /* Green */
+    background: #28a745; /* Bootstrap Success Green */
 }
 
 .coming-soon-badge {
-    background: #f1c40f; /* Yellow */
-    color: #34495e; /* Dark text for yellow badge */
+    background: #ffc107; /* Bootstrap Warning Yellow */
+    color: #343a40; 
 }
 
 .r-package {
-    background: #e74c3c; /* Red */
+    background: #dc3545; /* Bootstrap Danger Red */
 }
 
 .vignette-label {
-    background: #3498db; /* Blue */
+    background: var(--accent-color); /* Primary Blue */
 }
 
 .manual-label {
-    background: #9b59b6; /* Purple */
+    background: #6f42c1; /* Bootstrap Purple */
 }
 
 .doc-item.coming-soon {
@@ -522,7 +554,7 @@ body {
     padding: 30px 0 10px 0;
     margin-top: 60px;
     font-size: 13px;
-    color: var(--footer-text); /* Use the defined variable */
+    color: var(--footer-text); 
     border-top: 1px solid var(--hover-border);
 }
 
