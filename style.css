@@ -388,6 +388,56 @@ body {
   -webkit-box-orient: vertical; 
   overflow: hidden; 
 } 
+/* =========================================================
+   Personal Notes & Logs — Three-Card Layout (1 : 1 : 2)
+   Left column: Project Updates + Development Log (stacked)
+   Right column: Learning Notes (occupies both rows)
+   ========================================================= */
+
+.notes-log-grid {
+    display: grid;
+    /* Left column : Right column = 1 : 2 */
+    grid-template-columns: 1fr 2fr;
+    /* Two rows; height adapts to content */
+    grid-template-rows: auto auto;
+
+    /* Mapping grid areas to visual layout */
+    grid-template-areas:
+        "news notes"     /* Row 1: Project Updates | Learning Notes */
+        "devlog notes";  /* Row 2: Development Log | Learning Notes */
+
+    gap: 20px; /* Spacing between cards */
+}
+
+/* --- Assigning each card to its grid area --- */
+
+.notes-log-grid .notes-news {
+    grid-area: news; /* Upper-left card */
+}
+
+.notes-log-grid .notes-devlog {
+    grid-area: devlog; /* Lower-left card */
+}
+
+.notes-log-grid .notes-learning {
+    grid-area: notes; /* Full right-side card (span two rows) */
+}
+
+/* =========================================================
+   Responsive layout (mobile & small screens)
+   Stack all three cards vertically
+   ========================================================= */
+
+@media (max-width: 800px) {
+    .notes-log-grid {
+        grid-template-columns: 1fr;  /* Single column */
+        grid-template-areas:
+            "notes"   /* Learning Notes goes first (largest section) */
+            "news"    /* Project Updates second */
+            "devlog"; /* Dev Log last */
+    }
+}
+
 
 .tags { 
   display: flex; 
