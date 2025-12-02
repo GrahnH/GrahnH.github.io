@@ -2,7 +2,7 @@
 /* --- LIGHT/DARK MODE VARIABLES --- */
 /* ------------------------------------ */
 :root {
-  /* Light Mode Defaults - Changed to Lumen Primary Blue */
+  /* Light Mode Defaults */
   --bg-start: #f5f7fa;
   --bg-end: #c3cfe2;
   --header-bg: #fff;
@@ -10,8 +10,8 @@
   --text-main: #2c3e50;
   --text-secondary: #7f8c8d;
   --text-label: #95a5a6;
-  --accent-color: #158cba; /* Lumen Primary Blue */
-  --hover-border: rgba(21, 140, 186, 0.2); /* Blue hover border */
+  --accent-color: #8e44ad; /* Original Purple */
+  --hover-border: rgba(142, 68, 173, 0.2); /* Original Purple hover border */
   --shadow-color: rgba(0,0,0,0.08);
   --toggle-bg: #e0e0e0;
   --toggle-handle: #fff;
@@ -26,17 +26,12 @@
   --text-main: #ecf0f1;
   --text-secondary: #bdc3c7;
   --text-label: #7f8c8d;
-  --accent-color: #37b3e0; /* Brighter Blue for dark mode */
-  --hover-border: rgba(55, 179, 224, 0.4); /* Blue hover border */
+  --accent-color: #9b59b6; /* slightly brighter purple for dark mode */
+  --hover-border: rgba(155, 89, 182, 0.4); /* Purple hover border */
   --shadow-color: rgba(0,0,0,0.4);
   --toggle-bg: #555;
   --toggle-handle: #ccc;
   --footer-text: #95a5a6;
-}
-
-/* Fix: Manually set tag color to the new Lumen blue */
-.manual-label {
-    background: var(--accent-color); /* Use the new accent color */
 }
 
 /* Original CSS remains unchanged */
@@ -123,41 +118,40 @@
     gap: 20px;
 }
 
-/* --- NEW: PERSONAL NOTES GRID (1fr 1fr 2fr layout) --- */
-.notes-log-grid {
+/* --- NEW: PERSONAL NOTES STACKED GRID LAYOUT --- */
+.notes-log-grid-stack {
     display: grid;
-    /* Default to 1fr 1fr 2fr for desktop */
-    grid-template-columns: 1fr 1fr 2fr; 
+    /* Two columns: Left (stack) 40%, Right (Learning Notes) 60% */
+    grid-template-columns: 40% 60%;
     gap: 20px;
+}
+
+.col-stack {
+    display: flex;
+    flex-direction: column;
+    /* Ensures Dev Log and Project Update cards take up the full column height */
+    justify-content: space-between; 
+    gap: 20px; /* Spacing between Dev Log and Project Update */
 }
 
 /* Responsive adjustment for the notes grid */
 @media (max-width: 992px) {
-    /* On tablets, switch to 2-column layout with Learning Notes spanning 2 columns */
-    .notes-log-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-    .notes-log-grid .notes-item:nth-child(3) { /* Target Learning Notes card */
-        grid-column: span 2;
-    }
-}
-
-@media (max-width: 768px) {
-    /* On mobile, stack all items vertically */
-    .doc-grid,
-    .notes-log-grid {
+    .notes-log-grid-stack {
+        /* On tablets, switch back to a single column */
         grid-template-columns: 1fr;
     }
-    .notes-log-grid .notes-item:nth-child(3) { /* Remove span for mobile */
-        grid-column: span 1;
+    .col-stack {
+        /* When stacked, let the cards flow naturally */
+        flex-direction: column;
     }
 }
-/* --- END NEW: PERSONAL NOTES GRID --- */
+/* --- END NEW: PERSONAL NOTES STACKED GRID LAYOUT --- */
 
+/* --- DOC ITEM STYLES (RESTORED) --- */
 .doc-item {
     padding: 20px;
     border-radius: 10px;
-    background-color: var(--header-bg); /* Slightly different background for items */
+    background-color: var(--header-bg); /* Use header-bg for card body */
     border: 1px solid var(--hover-border);
     transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
     display: flex;
@@ -193,6 +187,8 @@
     color: var(--text-secondary);
     margin-top: 5px;
 }
+/* --- END DOC ITEM STYLES (RESTORED) --- */
+
 
 /* --- BADGE STYLES --- */
 .status-badge {
@@ -223,7 +219,9 @@
     background: #3498db; /* Blue */
 }
 
-/* Lumen label is set at the top */
+.manual-label {
+    background: #9b59b6; /* RESTORED: Original Purple */
+}
 
 .doc-item.coming-soon {
     opacity: 0.6;
@@ -450,7 +448,7 @@
 
 .search-input:focus {
     outline: none;
-    border-color: var(--accent-color);
+    border-color: var(--accent-color); /* RESTORED: Focus color */
     box-shadow: 0 0 0 3px var(--hover-border);
 }
 
