@@ -4,592 +4,133 @@
   <meta charset="UTF-8" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
   <title>Programming Documentation Center</title> 
-  <style> 
-    body { 
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-      max-width: 1000px; 
-      margin: 0 auto; 
-      padding: 20px; 
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); 
-      min-height: 100vh; 
-    } 
-
-    /* Header */ 
-    .header { 
-      display: flex; 
-      align-items: center; 
-      justify-content: space-between; 
-      background: #fff; 
-      border-radius: 12px; 
-      box-shadow: 0 5px 20px rgba(0,0,0,0.08); 
-      padding: 20px 30px; 
-      margin-bottom: 40px; 
-      box-sizing: border-box; 
-      position: relative; 
-    } 
-
-    .header-dark { 
-      position: relative;             /* tooltip locate ref*/ 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
-      gap: 6px; 
-      flex: 0 0 auto; 
-      margin-right: 20px; 
-    } 
-
-    .logo { 
-      width: 60px; 
-      height: 60px; 
-      background: #fff; /*linear-gradient(135deg, #a8c5e6, #6d87f8); */
-      border-radius: 50px; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      cursor: pointer; 
-      box-shadow: 0 8px 25px rgba(52,152,219,0.3); 
-      transition: transform .2s ease; 
-      user-select: none; 
-    } 
-    .logo:active { transform: scale(0.98); } 
-    .logo img { 
-      max-width: 100%;   /* keep padding inside the box */
-      max-height: 100%; 
-      object-fit: contain; 
-      border-radius: 50px; 
-}
-
-    .about-label { 
-      font-size: 9px; 
-      font-weight: 600; 
-      color: #7f8c8d; 
-      text-align: center; 
-      user-select: none; 
-    } 
-
-    .header-light { flex: 1; } 
-    .header-light h1 { 
-      color: #2c3e50; 
-      margin: 0 0 10px 0; 
-      font-size: 2em; 
-      font-weight: 700; 
-    } 
-    .header-light p { 
-      color: #7f8c8d; 
-      margin: 0; 
-      font-size: 1em; 
-      font-weight: 400; 
-    } 
-
-    /* Tooltip*/ 
-    .tooltip { 
-      position: absolute; 
-      top: 100%; 
-      left: 100%; 
-      transform: translateY(-50%); 
-      background: rgba(255,255,255,0.98); 
-      color: #eef2ff; 
-      padding: 20px; 
-      border-radius: 15px; 
-      width: 260px; 
-      margin-left: 20px; 
-      backdrop-filter: blur(12px); 
-      border: 1px solid #cfd8dc; 
-      box-shadow: 0 12px 30px rgba(0,0,0,0.15); 
-      opacity: 0; 
-      visibility: hidden; 
-      transition: opacity .25s ease, visibility .25s ease; 
-      z-index: 1000; 
-    } 
-    .tooltip::before { 
-      content: ''; 
-      position: absolute; 
-      top: 50%; 
-      left: -8px; 
-      transform: translateY(-50%); 
-      border: 8px solid transparent; 
-      border-right-color: rgba(255,255,255,0.98); 
-    } 
-    .tooltip.active { opacity: 1; visibility: visible; } 
-
-    /* Tooltip  */ 
-    .profile-name { font-size: 18px; font-weight: 700; margin-bottom: 8px; color: #2c3e50; } 
-    .profile-school { font-size: 14px; color: #7f8c8d; margin-bottom: 15px; } 
-    .profile-links { display: flex; gap: 12px; margin-bottom: 15px; } 
-    .profile-links a { 
-      color: #3498db; text-decoration: none; font-size: 13px; 
-      padding: 6px 12px; border: 1px solid #3498db; border-radius: 20px; 
-      transition: all .15s ease; font-weight: 500; 
-    } 
-    .profile-links a:hover { background: #3498db; color: #fff; transform: translateY(-1px); } 
-    .profile-bio { font-size: 14px; line-height: 1.5; color: #5d6d7e; } 
-
-    /* 自适应 */ 
-    @media (max-width: 768px) { 
-    .header { 
-    flex-direction: row;       /* Keep horizontal layout on mobile */ 
-    align-items: center;       /* Vertically center content */ 
-    justify-content: flex-start; 
-    gap: 12px;                 /* Add spacing between logo and text */ 
-    } 
-
-    .header-dark { 
-    margin-right: 12px;        /* Maintain spacing from title */ 
-    } 
-
-    .header-light h1 { 
-    font-size: 1.4em;          /* Reduce title size for mobile */ 
-    } 
-    .header-light p { 
-    font-size: 0.85em;         /* Smaller subtitle on mobile */ 
-    } 
-
-    .tooltip { 
-    width: min(300px, 90vw);   /* Prevent tooltip from overflowing screen */ 
-    } 
-  }
-   
-    /* Package sections  */ 
-    .package-section { 
-      background: white;
-      margin-bottom: 30px; 
-      border-radius: 12px; 
-      padding: 25px; 
-      box-shadow: 0 5px 20px rgba(0,0,0,0.08); 
-      transition: transform .3s ease; 
-    } 
-    .package-section:hover { transform: translateY(-5px); } 
-    .package-title { 
-      color: #2980b9; 
-      border-bottom: 3px solid #3498db; 
-      padding-bottom: 10px; 
-      margin-bottom: 20px; 
-      font-size: 1.5em; 
-    } 
-    .notes-title { color: #8e44ad; border-bottom: 3px solid #9b59b6; } 
-    .doc-grid { 
-      display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); 
-      gap: 15px; 
-      margin-top: 15px; 
-    } 
-    .doc-item { 
-      padding: 15px; background: #f8f9fa; border-radius: 5px; 
-      border-left: 4px solid #3498db; transition: all .3s ease; 
-    } 
-    .doc-item:hover { background: #e3f2fd; border-left-color: #2196f3; } 
-    .notes-item { border-left-color: #9b59b6; } 
-    .notes-item:hover { background: #f3e5f5; border-left-color: #8e44ad; } 
-    .doc-item a { text-decoration: none; color: #2980b9; font-weight: 600; display: block; margin-bottom: 5px; } 
-    .notes-item a { color: #8e44ad; } 
-    .doc-item a:hover { color: #1565c0; } 
-    .notes-item a:hover { color: #6a1b9a; } 
-    .doc-description { color: #666; font-size: .9em; line-height: 1.4; } 
-    .coming-soon { opacity: .6; background: #f5f5f5; border-left-color: #bdc3c7; } 
-    .coming-soon a { color: #7f8c8d; cursor: default; } 
-    .status-badge { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: .75em; font-weight: 700; margin-left: 8px; } 
-    .available { background: #d4edda; color: #155724; } 
-    .coming-soon-badge { background: #fff3cd; color: #856404; } 
-    .r-package { background: #e8f4f8; color: #0277bd; font-size: .8em; padding: 2px 6px; border-radius: 8px; margin-left: 10px; } 
-    .vignette-label {background-color: #e0f7fa; color: #00796b; } 
-    .manual-label {background-color: #e0f7fa; color: #1d70c3;} 
-
-    /* === Sidebar and overlay styles  === */
-    /* Sidebar: hidden off-canvas by default, slides in from the left when .active */
-    .sidebar { 
-      position: fixed; 
-      top: 0; 
-      left: -300px; /* hidden by default */ 
-      width: 280px; 
-      height: 100%; 
-      background: #fff; 
-      box-shadow: 2px 0 12px rgba(0,0,0,0.2); 
-      transition: left 0.3s ease; 
-      z-index: 2000; 
-      border-top-right-radius: 12px; 
-      border-bottom-right-radius: 12px; 
-      overflow-y: auto; 
-    } 
-    .sidebar.active { left: 0; } 
-
-    /* Optional header/close button styling inside the sidebar */
-    .sidebar-header { 
-      display: flex; 
-      align-items: center; 
-      justify-content: space-between; 
-      padding: 16px 20px; 
-      border-bottom: 1px solid #eee; 
-    } 
-    .close-btn { 
-      font-size: 28px; 
-      line-height: 1; 
-      cursor: pointer; 
-      color: #7f8c8d; 
-      user-select: none; 
-    } 
-    .close-btn:hover { color: #2c3e50; } 
-    .sidebar-content { padding: 16px 20px; } 
-
-    /* Overlay: covers the page when sidebar is open */
-    .overlay { 
-      position: fixed; 
-      top: 0; 
-      left: 0; 
-      width: 100%; 
-      height: 100%; 
-      background: rgba(0,0,0,0.4); 
-      display: none; /* hidden by default */ 
-      z-index: 1500; 
-    } 
-    .overlay.active { display: block; } 
-  </style> 
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
 </head> 
 <body> 
-  <!-- Header --> 
-  <div class="header" id="site-header"> 
+
+  <!-- Header Section -->
+  <header class="header"> 
     <div class="header-dark"> 
-      <div class="logo" id="logo-btn">
-         <img src="images/logo.png" alt="Logo">
-      </div> 
-      <div class="logo-button" onclick="toggleSidebar()"></div> 
-      <div class="about-label">About Grahn</div> 
-
-      <!-- ✅ Tooltip click --> 
-      <div class="tooltip" id="profile-tooltip"> 
-        <div class="profile-name">Grahn Huang</div> 
-        <div class="profile-school">Humboldt University of Berlin  Department of Biology</div> 
-        <div class="profile-links"> 
-          <a href="https://github.com/grahnh" target="_blank" rel="noreferrer">GitHub</a> 
-          <a href="mailto:huangyue@hu-berlin.de">Email</a> 
-        </div> 
-        <div class="profile-bio">
-          Yuewen Huang • Undergraduate in Biophysics • CRAN package author</div>
-        <div class="profile-bio">Interested in building small tools that help research and learning</div>
-      </div> 
+      <div class="mode-toggle" id="themeToggle" title="Toggle Dark Mode (Coming Soon)"></div> 
+      <span style="font-size:10px; color:#999; font-weight:600;">Dark</span> 
     </div> 
 
-    <div class="header-light"> 
-      <h1> Grahn's Programming Documentation Center</h1> 
-      <p>Documentation hub for packages, tools, and development notes in github.com/GrahnH</p> 
-    </div> 
-  </div> 
+    <h1 class="page-title">Documentation Center</h1> 
 
-  <!-- Personal Notes Section --> 
-  <div class="package-section"> 
-    <h2 class="package-title notes-title">📝 Personal Notes & Logs</h2> 
-    <p>Development diary, project updates, and personal documentation.</p> 
+    <nav class="nav-links"> 
+      <a href="index.html" class="active">Home</a> 
+      <a href="#">Learning Notes</a> 
+      <a href="dev-log.html">Dev Log</a> 
+    </nav> 
+  </header> 
 
-    <div class="doc-grid"> 
-      <!-- Development Log --> 
-      <div class="doc-item notes-item"> 
-        <div class="doc-title-line"> 
-          <a href="#">Development Log</a> 
-        </div> 
-        <div class="doc-description">Daily development progress and insights</div> 
+  <!-- Search Section -->
+  <div class="search-container">
+      <input type="text" id="notesSearchInput" class="search-input" placeholder="Search notes by title, content or tags...">
+  </div>
 
-        <!-- Latest Entry Preview --> 
-        <div style="margin-top: 15px; padding: 12px; background: #f8f4fd; border-radius: 3px; border-left: 3px solid #8e44ad;"> 
-          <div style="color: #8e44ad; font-weight: bold; font-size: 0.85em; margin-bottom: 5px;">📅 Latest: 2025-09-18</div> 
-          <div style="color: #5a5a5a; font-size: 0.8em; line-height: 1.4;"> 
-            • Set up GitHub Pages documentation center<br> 
-            • Created modular structure for multiple projects<br> 
-            • Added TrendTestR package documentation 
+  <!-- Search Results Section (Initially Hidden) -->
+  <div id="searchSection" class="search-results-section">
+      <div class="section-title">
+          Search Results
+          <!-- Link to view all results -->
+          <a href="#" id="viewAllResults" class="view-all-link">View All Results</a>
+      </div>
+      
+      <!-- Slider Container for Top 3 Results -->
+      <div id="searchResultsContainer" class="search-slider-container">
+          <!-- JS inserts results here -->
+      </div>
+      
+      <div id="noResults" class="no-results">
+          No notes found matching your search.
+      </div>
+  </div>
+
+  <!-- Main Content Area -->
+  <div id="allContentSection">
+      
+      <!-- **RESTORED: TrendTestR Package Section** --> 
+      <div class="package-section"> 
+        <h2 class="package-title"> 
+          🔍 TrendTestR Documentation 
+          <span class="status-badge r-package">R Package</span> 
+          <span class="status-badge available">Available</span> 
+        </h2> 
+        <p>Exploratory Trend Analysis and Visualization for Time-Series and Grouped Data.</p> 
+
+        <div class="doc-grid"> 
+          <div class="doc-item"> 
+            <div class="doc-title-line"> 
+              <a href="trendtestr-intro-CovidBerlin25.html">COVID Berlin Analysis</a> 
+              <span class="status-badge vignette-label">vignette</span> 
+            </div> 
+            <div class="doc-description">Workflow of trend analysis with COVID-19 data in Berlin using TrendTestR methods</div> 
           </div> 
-          <div style="text-align: right; margin-top: 8px;"> 
-            <span style="color: #8e44ad; font-size: 0.75em; font-style: italic;"> 
-              <a href="dev-log.html">→ Click to view full log</a> 
-            </span> 
+          <div class="doc-item"> 
+            <div class="doc-title-line"> 
+              <a href="trendtestr-intro-eustockmarkets.html">EU Stock Markets Analysis</a> 
+              <span class="status-badge vignette-label">vignette</span> 
+            </div> 
+            <div class="doc-description">Workflow example of trend analysis with European stock market data using TrendTestR methods</div> 
+          </div> 
+
+          <div class="doc-item"> 
+            <div class="doc-title-line"> 
+              <a href="https://cran.r-project.org/web/packages/trendtestR/refman/trendtestR.html">Reference manual</a> 
+              <span class="status-badge manual-label">manual</span> 
+            </div> 
+            <div class="doc-description">Package contents and help of trendtestR </div> 
           </div> 
         </div> 
       </div> 
 
-      <!-- project update and News --> 
-      <div class="doc-item notes-item"> 
-        <a href="#">Project Updates and News</a> 
-        <div class="doc-description">Status updates and milestone tracking</div> 
+      <!-- **RESTORED: Future Package Section** --> 
+      <div class="package-section"> 
+        <h2 class="package-title">🚀 Future Project <span class="status-badge coming-soon-badge">Coming Soon</span></h2> 
+        <p>Space reserved for upcoming packages, tools, or documentation projects.</p> 
 
-        <!-- Latest Entry Preview --> 
-        <div style="margin-top: 15px; padding: 12px; background: #f8f4fd; border-radius: 3px; border-left: 3px solid #8e44ad;"> 
-          <div style="color: #8e44ad; font-weight: bold; font-size: 0.85em; margin-bottom: 5px;">📅 Latest: 2025-09-02</div> 
-          <div style="color: #5a5a5a; font-size: 0.8em; line-height: 1.4;"> 
-            • <strong>trendtestR</strong> has been published on <a href="https://cran.r-project.org/package=trendtestR" target="_blank" style="color: #8e44ad;">CRAN.</a> 
+        <div class="doc-grid"> 
+          <div class="doc-item coming-soon"> 
+            <a href="#">Documentation Placeholder</a> 
+            <div class="doc-description">Future documentation will be available here</div> 
+          </div> 
+          <div class="doc-item coming-soon"> 
+            <a href="#">Additional Resources</a> 
+            <div class="doc-description">Supplementary materials and examples</div> 
           </div> 
         </div> 
       </div> 
-
-      <!-- Learning Notes --> 
-      <div class="doc-item notes-item"> 
-        <a href="learning-notes.html">Learning Notes</a> 
-        <div class="doc-description">Technical notes and learning resources</div> 
-        <div style="margin-top: 15px;"> 
-          <input type="text" id="notesSearchInput" placeholder="Search notes..." 
-                 style="width: 100%; padding: 8px 12px; border: 1px solid #dee2e6; border-radius: 20px; font-size: 13px; outline: none; transition: border-color .3s ease;  box-sizing: border-box;"> 
-        </div> 
-
-        <div style="margin-top: 15px;" id="recentNotesPreview"> 
-          <div style="color: #8e44ad; font-weight: 600; font-size: 0.85em; margin-bottom: 10px; border-bottom: 1px solid #e8e8e8; padding-bottom: 5px;"> 
-            📚 Recent Notes 
-          </div> 
-          <div id="recentNotesContainer"></div> 
-        </div> 
-
-        <div style="margin-top: 15px; display: none;" id="searchResults"> 
-          <div style="color: #8e44ad; font-weight: 600; font-size: 0.85em; margin-bottom: 10px; border-bottom: 1px solid #e8e8e8; padding-bottom: 5px;"> 
-            🔍 Search Results 
-          </div> 
-          <div id="searchResultsContainer"></div> 
-        </div> 
-
-        <div style="margin-top: 15px; display: none; text-align: center; color: #7f8c8d; font-style: italic; font-size: 0.8em;" id="noSearchResults"> 
-          No notes found 
-        </div> 
-      </div> 
-    </div> 
-  </div> 
-
-  <!-- TrendTestR Package Section --> 
-  <div class="package-section"> 
-    <h2 class="package-title"> 
-      🔍 TrendTestR Documentation 
-      <span class="r-package">R Package</span> 
-      <span class="status-badge available">Available</span> 
-    </h2> 
-    <p>Exploratory Trend Analysis and Visualization for Time-Series and Grouped Data.</p> 
-
-    <div class="doc-grid"> 
-      <div class="doc-item"> 
-        <div class="doc-title-line"> 
-          <a href="trendtestr-intro-CovidBerlin25.html">COVID Berlin Analysis</a> 
-          <span class="status-badge vignette-label">vignette</span> 
-        </div> 
-        <div class="doc-description">Workflow of trend analysis with COVID-19 data in Berlin using TrendTestR methods</div> 
-      </div> 
-      <div class="doc-item"> 
-        <div class="doc-title-line"> 
-          <a href="trendtestr-intro-eustockmarkets.html">EU Stock Markets Analysis</a> 
-          <span class="status-badge vignette-label">vignette</span> 
-        </div> 
-        <div class="doc-description">Workflow example of trend analysis with European stock market data using TrendTestR methods</div> 
+      
+      <!-- Recent Learning Notes (Dynamically loaded by JS) -->
+      <h2 class="section-title" style="margin-top: 40px;">
+          Recent Learning Notes
+          <a href="#" style="font-size:14px; color:#8e44ad; text-decoration:none; margin-left:auto;">View Archive →</a>
+      </h2> 
+      
+      <div class="notes-grid" id="recentNotesContainer"> 
+        <!-- JS renders notes here -->
       </div> 
 
-      <div class="doc-item"> 
-        <div class="doc-title-line"> 
-          <a href="https://cran.r-project.org/web/packages/trendtestR/refman/trendtestR.html">Reference manual</a> 
-          <span class="status-badge manual-label">manual</span> 
-        </div> 
-        <div class="doc-description">Package contents and help of trendtestR </div> 
-      </div> 
-    </div> 
-  </div> 
+      <!-- Development Log Preview (Dynamically loaded by JS) -->
+      <h2 class="section-title" style="margin-top: 50px;">
+          Latest Dev Updates
+          <a href="dev-log.html" style="font-size:14px; color:#8e44ad; text-decoration:none; margin-left:auto;">Full Log →</a>
+      </h2> 
+      
+      <div class="notes-grid" id="latestDevLogContainer">
+          <!-- JS renders dev logs here -->
+      </div>
+      
+  </div>
 
-  <!-- Future Package Section --> 
-  <div class="package-section"> 
-    <h2 class="package-title">🚀 Future Project <span class="status-badge coming-soon-badge">Coming Soon</span></h2> 
-    <p>Space reserved for upcoming packages, tools, or documentation projects.</p> 
-
-    <div class="doc-grid"> 
-      <div class="doc-item coming-soon"> 
-        <a href="#">Documentation Placeholder</a> 
-        <div class="doc-description">Future documentation will be available here</div> 
-      </div> 
-      <div class="doc-item coming-soon"> 
-        <a href="#">Additional Resources</a> 
-        <div class="doc-description">Supplementary materials and examples</div> 
-      </div> 
-    </div> 
-  </div> 
-
-  <!-- Footer --> 
-  <div style="text-align: center; margin-top: 40px; color: #7f8c8d;"> 
-    <p>🔧 Documentation site powered by GitHub Pages</p> 
-    <p><em>Continuously updated with new projects and insights</em></p> 
-  </div> 
-
-  <!--sidebar for mobil mode --> 
-  <div id="sidebar" class="sidebar"> 
-    <div class="sidebar-header"> 
-      <h2>About Me</h2> 
-      <span onclick="toggleSidebar()" class="close-btn">&times;</span> 
-    </div> 
-    <div class="sidebar-content"> 
-      <div class="profile-name">Grahn Huang</div> 
-        <div class="profile-school">Humboldt University of Berlin  Department of Biology</div> 
-        <div class="profile-links"> 
-          <a href="https://github.com/grahnh" target="_blank" rel="noreferrer">GitHub</a> 
-          <a href="mailto:huangyue@hu-berlin.de">Email</a> 
-        </div> 
-        <div class="profile-bio">
-          Yuewen Huang • Undergraduate in Biophysics • CRAN package author</div>
-        <div class="profile-bio">Interested in building small tools that help research and learning</div> 
-    </div> 
-  </div> 
-
-  <!--cover --> 
-  <div id="overlay" class="overlay" onclick="toggleSidebar()"></div> 
-
-  <!-- Data sources --> 
-  <script src="learning-notes-data.js"></script> 
-  <script src="dev-log-data.js"></script> 
-
-  <!-- App scripts --> 
-  <script> 
-    /* ===== Tooltip & Sidebar interactions (English comments) ===== */
-    (function () { 
-      const header = document.getElementById('site-header'); 
-      const logoBtn = document.getElementById('logo-btn'); 
-      const tooltip = document.getElementById('profile-tooltip'); 
-
-      function closeTooltip() { tooltip.classList.remove('active'); } 
-
-      // Desktop: toggle tooltip; Mobile (≤768px): open sidebar + overlay
-      function onLogoClick(e) {
-        e.stopPropagation();
-        if (window.innerWidth <= 768) {
-          toggleSidebar();
-        } else {
-          tooltip.classList.toggle('active');
-        }
-      }
-
-      logoBtn.addEventListener('click', onLogoClick); 
-
-      // Close tooltip by clicking outside of the header (desktop only)
-      document.addEventListener('click', (e) => { 
-        if (!header.contains(e.target) && window.innerWidth > 768) closeTooltip(); 
-      }); 
-
-      // Close tooltip with ESC key
-      document.addEventListener('keydown', (e) => { 
-        if (e.key === 'Escape') closeTooltip(); 
-      }); 
-
-      // Close tooltip on resize to avoid misplacement
-      window.addEventListener('resize', closeTooltip); 
-    })(); 
-
-    
-  </script> 
-  <script> 
-    // Sidebar toggle (English comment): toggles both sidebar and overlay visibility
-    function toggleSidebar() { 
-      document.getElementById("sidebar").classList.toggle("active"); 
-      document.getElementById("overlay").classList.toggle("active"); 
-    } 
-  </script> 
-  
+  <!-- 1. Learning Notes Data -->
   <script src="learning-notes-data.js"></script>
-    <script src="dev-log-data.js"></script>
-    <script>
-        function renderNotesPreview(notes, containerId, maxLength = 60) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            
-            container.innerHTML = '';
+  <!-- 2. Dev Log Data -->
+  <script src="dev-log-data.js"></script>
+  <!-- 3. Logic Script -->
+  <script src="script.js"></script>
 
-            if (!notes || notes.length === 0) {
-                container.innerHTML = '<div style="color: #7f8c8d; font-style: italic; font-size: 0.8em; padding: 10px;">No notes available</div>';
-                return;
-            }
-
-            notes.slice(0, 2).forEach(note => {
-                const noteElement = document.createElement('div');
-                noteElement.style.cssText = `
-                    background: white; 
-                    border-radius: 6px; 
-                    margin-top: 15px;
-                    margin-bottom: 8px; 
-                    overflow: hidden;
-                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-                    transition: transform 0.2s ease;
-                `;
-                
-                noteElement.innerHTML = `
-                    <div style="background: #8e44ad; color: white; padding: 8px 12px; font-weight: 600; font-size: 0.8em;">
-                     <a href="${note.link}" style="color: white; text-decoration: none;">${note.date} • ${note.title}</a>
-                    </div>
-                    <div style="padding: 10px 12px;">
-                        <div style="color: #5a5a5a; font-size: 0.75em; line-height: 1.4; margin-bottom: 8px;">
-                            ${note.content.length > maxLength ? note.content.substring(0, maxLength) + '...' : note.content}
-                        </div>
-                        <div>
-                            ${note.tags.map(tag => `<span style="background: #f0f0f0; color: #8e44ad; padding: 2px 6px; border-radius: 8px; font-size: 0.7em; margin-right: 4px; font-weight: 500;">${tag}</span>`).join('')}
-                        </div>
-                    </div>
-                `;
-                
-                // Add hover effect
-                noteElement.addEventListener('mouseenter', () => {
-                    noteElement.style.transform = 'translateY(-2px)';
-                    noteElement.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
-                });
-                noteElement.addEventListener('mouseleave', () => {
-                    noteElement.style.transform = 'translateY(0)';
-                    noteElement.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
-                });
-                
-                container.appendChild(noteElement);
-            });
-        }
-
-        function searchLearningNotes() {
-            const notes = window.learningNotesData || [];
-            const searchTerm = document.getElementById('notesSearchInput').value.toLowerCase().trim();
-            const recentSection = document.getElementById('recentNotesPreview');
-            const searchSection = document.getElementById('searchResults');
-            const noResultsSection = document.getElementById('noSearchResults');
-
-            if (searchTerm === '') {
-                // Show recent notes
-                recentSection.style.display = 'block';
-                searchSection.style.display = 'none';
-                noResultsSection.style.display = 'none';
-            } else {
-                // Filter notes
-                const filteredNotes = notes.filter(note =>
-                    note.title.toLowerCase().includes(searchTerm) ||
-                    note.content.toLowerCase().includes(searchTerm) ||
-                    note.tags.some(tag => tag.toLowerCase().includes(searchTerm))
-                );
-
-                recentSection.style.display = 'none';
-
-                if (filteredNotes.length > 0) {
-                    searchSection.style.display = 'block';
-                    noResultsSection.style.display = 'none';
-                    renderNotesPreview(filteredNotes, 'searchResultsContainer', 80);
-                } else {
-                    searchSection.style.display = 'none';
-                    noResultsSection.style.display = 'block';
-                }
-            }
-        }
-
-        // Event listeners
-        document.addEventListener('DOMContentLoaded', function() {
-            const notes = window.learningNotesData || [];
-            const devLogs = window.devLogData || [];
-            
-            // Initialize recent notes
-            renderNotesPreview(notes, 'recentNotesContainer');
-            
-            // Initialize latest dev log
-            renderNotesPreview(devLogs, 'latestDevLogContainer');
-            
-            // Add search functionality
-            const searchInput = document.getElementById('notesSearchInput');
-            if (searchInput) {
-                searchInput.addEventListener('input', searchLearningNotes);
-                
-                // Add focus/blur effects for search input
-                searchInput.addEventListener('focus', function() {
-                    this.style.borderColor = '#8e44ad';
-                });
-                
-                searchInput.addEventListener('blur', function() {
-                    this.style.borderColor = '#dee2e6';
-                });
-            }
-        });
-    </script>
 </body> 
 </html>
