@@ -6,7 +6,8 @@
  */
 
 /**
- * Renders dev log in simple format (similar to Project Updates)
+ * NEW FUNCTION: Renders dev log in simple compact format
+ * (Different from renderNotesPreview which is for Learning Notes)
  */
 function renderDevLogSimple(logsData, containerId) {
     const container = document.getElementById(containerId);
@@ -19,9 +20,10 @@ function renderDevLogSimple(logsData, containerId) {
         return;
     }
 
+    // Simple format: just date + title + brief content
     logsData.forEach(log => {
         const entry = document.createElement('div');
-        entry.className = 'latest-entry-box';
+        entry.style.marginBottom = '12px';
         
         entry.innerHTML = `
             <div class="latest-entry-header">${log.date}</div>
@@ -36,6 +38,8 @@ function renderDevLogSimple(logsData, containerId) {
         container.appendChild(entry);
     });
 }
+
+
 function renderNotesPreview(notesData, containerId, isSlider = false) {
     const container = document.getElementById(containerId);
     if (!container) return; // Exit if container not found
@@ -162,10 +166,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Render to Recent Notes container, which uses the notes-scroll-area style
     renderNotesPreview(recentNotes, 'recentNotesContainer', false);
 
-    // 2. Load Dev Log (Original logic maintained, limited to 4)
+   // 2. Load DEV LOG (uses NEW renderDevLogSimple function)
     const devLogs = window.devLogData || [];
     const recentDevLogs = devLogs.slice(0, 2); 
-    renderNotesPreview(recentDevLogs, 'latestDevLogContainer');
+    renderDevLogSimple(recentDevLogs, 'latestDevLogContainer');
 
     // 3. Bind Search Events
     const searchInput = document.getElementById('notesSearchInput');
