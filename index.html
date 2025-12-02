@@ -17,7 +17,7 @@
     <!-- Profile, Logo, and Tooltip Section -->
     <div class="header-dark" id="profileToggle"> 
       <div class="logo" id="logo-btn">
-         <!-- 使用用户提供的图片URL（已修正为原始访问路径），并设置加载失败的占位符 -->
+         
          <img 
             src="https://grahnh.github.io/images/logo.png" 
             alt="Grahn Logo" 
@@ -53,8 +53,7 @@
     </nav> 
   </header> 
 
-  <!-- 注意：顶部的 Search Section 已移除，搜索框被移入 Personal Notes Card 中 -->
-
+ 
   <!-- Main Content Area -->
   <div id="allContentSection">
       
@@ -94,6 +93,7 @@
       </div> 
       
       <!-- START: Reintegrated Personal Notes Section -->
+     <!-- START: Personal Notes Section -->
       <div class="package-section notes-section"> 
         <h2 class="package-title notes-title">📝 Personal Notes & Logs</h2> 
         <p>Development diary, project updates, and personal documentation.</p> 
@@ -105,21 +105,17 @@
               <a href="dev-log.html">Development Log</a> 
             </div> 
             <div class="doc-description">Daily development progress and insights</div> 
-
-            <!-- Latest Entry Preview --> 
-            <div class="latest-entry-preview"> 
-              <div class="latest-entry-title">📅 Latest: 2025-09-18</div> 
-              <div class="latest-entry-content"> 
-                • Set up GitHub Pages documentation center<br> 
-                • Created modular structure for multiple projects<br> 
-                • Added TrendTestR package documentation 
-              </div> 
-              <div class="full-log-link"> 
-                <span> 
-                  <a href="dev-log.html">→ Click to view full log</a> 
-                </span> 
-              </div> 
+            
+            <div style="margin-top: 15px;" class="latest-entry-title"> 
+              📜 Latest Entry: 
             </div> 
+            <!-- Latest Dev Log Entry Container -->
+            <div id="latestDevLogContainer">
+              <!-- JS Renders 4 latest vertical cards here (Original logic kept) -->
+            </div>
+            <div style="text-align: right; margin-top: 10px;">
+              <a href="dev-log.html" class="view-all-link">View All Logs →</a>
+            </div>
           </div> 
 
           <!-- 2. Project Update and News --> 
@@ -128,51 +124,48 @@
                 <a href="#">Project Updates and News</a> 
             </div>
             <div class="doc-description">Status updates and milestone tracking</div> 
-
-            <!-- Latest Entry Preview --> 
-            <div class="latest-entry-preview"> 
-              <div class="latest-entry-title">📅 Latest: 2025-09-02</div> 
-              <div class="latest-entry-content"> 
-                • <strong>trendtestR</strong> has been published on <a href="https://cran.r-project.org/package=trendtestR" target="_blank" style="color:var(--accent-color);">CRAN.</a> 
-              </div> 
-            </div> 
           </div> 
 
-          <!-- 3. Learning Notes (with nested Search & New Scroll) --> 
+          <!-- 3. Learning Notes (with nested Search & Scroll Area) --> 
           <div class="doc-item notes-item"> 
-            <!-- LINK UPDATED to archive page -->
             <a href="learning-notes-archive.html">Learning Notes</a> 
             <div class="doc-description">Technical notes and learning resources</div> 
             
-            <!-- Search Input -->
+         
             <div style="margin-top: 15px;"> 
               <input type="text" id="notesSearchInput" placeholder="Search notes..." class="search-input"> 
             </div> 
 
-            <!-- Recent Notes Preview - Horizontal Scroll --> 
-            <div style="margin-top: 15px;" id="recentNotesPreview"> 
-              <div class="latest-entry-title" style="margin-bottom: 10px; padding-bottom: 5px;"> 
-                📚 Recent Notes (Scrollable) 
+           
+            <div id="recentNotesArea" style="margin-top: 15px;"> 
+              <div class="latest-entry-title notes-area-title"> 
+                📚 Recent Notes 
               </div> 
-              <div id="recentNotesContainer" class="notes-scroll-container">
-                  <!-- JS Renders Scroll Cards here -->
-                  <!-- 提示：此处将被 script.js 渲染的 scroll-card 填充 -->
+              
+              <div id="recentNotesContainer" class="notes-scroll-area">
+                  <!-- JS Renders 3 latest vertical cards here -->
               </div> 
+              <div style="text-align: right; margin-top: 10px;">
+                <a href="learning-notes-archive.html" class="view-all-link">View All Notes →</a>
+              </div>
             </div> 
 
-            <!-- Search Results (Hidden by default, will use standard vertical display) -->
-            <div style="margin-top: 15px; display: none;" id="searchResults"> 
-              <div class="latest-entry-title" style="margin-bottom: 10px; border-bottom: 1px solid var(--hover-border); padding-bottom: 5px;"> 
+          
+            <div id="searchResultsArea" style="margin-top: 15px; display: none;"> 
+              <div class="latest-entry-title notes-area-title"> 
                 🔍 Search Results 
+                <span id="resultCount" style="font-size: 0.8em; color: var(--text-secondary); font-weight: 400;"></span>
               </div> 
-              <div id="searchResultsContainer">
-                  <!-- JS Renders Vertical Search Results here -->
+           
+              <div id="searchResultsContainer" class="notes-scroll-area">
+                  <!-- JS Renders all matching vertical cards here -->
+              </div> 
+           
+              <div id="noSearchResults" class="no-results" style="display: none;"> 
+                No notes found matching your search.
               </div> 
             </div> 
 
-            <div style="margin-top: 15px; display: none; text-align: center; color: var(--text-label); font-style: italic; font-size: 0.8em;" id="noSearchResults"> 
-              No notes found 
-            </div> 
           </div> 
         </div> 
       </div> 
