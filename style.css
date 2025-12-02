@@ -10,7 +10,7 @@
   --text-main: #2c3e50;
   --text-secondary: #7f8c8d;
   --text-label: #95a5a6;
-  --accent-color: #8e44ad;
+  --accent-color: #158cba;;
   --hover-border: rgba(142, 68, 173, 0.2);
   --shadow-color: rgba(0,0,0,0.08);
   --toggle-bg: #e0e0e0;
@@ -34,7 +34,9 @@
   --footer-text: #95a5a6; /* Brighter gray for dark mode footer */
 }
 
-
+.manual-label {
+    background: var(--accent-color); /* Use the new accent color */
+}
 /* ------------------------------------ */
 /* --- BASE & UTILITY STYLES --- */
 /* ------------------------------------ */
@@ -571,4 +573,46 @@ body {
       left: 5%;
       transform: translateX(0) translateY(10px);
   }
+}
+.notes-area-title {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    font-weight: 600;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--hover-border);
+}
+
+/* 滚动容器样式 */
+.notes-scroll-area {
+    /* 限制高度：大约是 3 个笔记卡片的高度 */
+    max-height: 350px; 
+    overflow-y: auto; /* 垂直滚动条 */
+    overflow-x: hidden;
+    padding-right: 10px; /* 为滚动条留出空间 */
+    
+    /* 自定义滚动条样式 */
+    scrollbar-width: thin; 
+    scrollbar-color: var(--accent-color) var(--hover-border);
+}
+
+.notes-scroll-area::-webkit-scrollbar {
+    width: 6px;
+}
+
+.notes-scroll-area::-webkit-scrollbar-track {
+    background: var(--hover-border);
+    border-radius: 3px;
+}
+
+.notes-scroll-area::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 3px;
+}
+
+
+.notes-scroll-area .note-card {
+    margin-bottom: 15px; 
+    border: 1px solid var(--hover-border); 
+    box-shadow: none;
+    transition: all 0.2s;
 }
