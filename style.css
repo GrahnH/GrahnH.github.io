@@ -996,3 +996,26 @@ body {
     padding-top: 6px;
     border-top: 1px solid var(--hover-border);  /* subtle divider line */
 }
+/* =========================================================
+   Hover Effects for Dev Log and Project Updates Cards
+   ========================================================= */
+
+.notes-section .notes-devlog,
+.notes-section .notes-news {
+    transition: all 0.3s ease;
+}
+
+.notes-section .notes-devlog:hover,
+.notes-section .notes-news:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 26px var(--shadow-color);
+}
+
+.notes-section .latest-entry-box {
+    transition: none;
+    background: rgba(155, 89, 182, 0.06);
+}
+
+.dark-mode .notes-section .latest-entry-box {
+    background: rgba(155, 89, 182, 0.15);
+}
