@@ -3,18 +3,17 @@
 /* ------------------------------------ */
 :root {
   /* Light Mode Defaults */
-  --bg-start: #fbfbfb; /* Very light gray */
-  --bg-end: #ecf0f1; /* Light concrete */
+  --bg-start: #f5f7fa;
+  --bg-end: #c3cfe2;
   --header-bg: #fff;
   --card-bg: #fff;
-  --text-main: #34495e; /* Dark slate text */
+  --text-main: #2c3e50;
   --text-secondary: #7f8c8d;
   --text-label: #95a5a6;
-  --accent-color: #2c3e50; /* Deep Ocean Blue (Primary text/title color) */
-  --active-color: #e67e22; /* Soft Orange/Gold (Highlight/link color) */
-  --hover-border: rgba(44, 62, 80, 0.1); /* Subtle Blue hover border */
+  --accent-color: #158cba;;
+  --hover-border: rgba(142, 68, 173, 0.2);
   --shadow-color: rgba(0,0,0,0.08);
-  --toggle-bg: #dcdde1;
+  --toggle-bg: #e0e0e0;
   --toggle-handle: #fff;
   --footer-text: #7f8c8d; /* Footer specific text color */
 }
@@ -22,186 +21,476 @@
 .dark-mode {
   --bg-start: #1c1c1c;
   --bg-end: #2c2c2c;
-  --header-bg: #34495e; /* Use deep blue for dark header */
+  --header-bg: #2d2d2d;
   --card-bg: #3c3c3c;
   --text-main: #ecf0f1;
   --text-secondary: #bdc3c7;
   --text-label: #7f8c8d;
-  --accent-color: #f1c40f; /* Brighter Gold/Yellow for dark mode titles */
-  --active-color: #e67e22; /* Keep soft orange/gold for highlights */
-  --hover-border: rgba(241, 196, 15, 0.4); /* Gold hover border */
+  --accent-color: #9b59b6; /* slightly brighter purple for dark mode */
+  --hover-border: rgba(155, 89, 182, 0.4);
   --shadow-color: rgba(0,0,0,0.4);
   --toggle-bg: #555;
   --toggle-handle: #ccc;
-  --footer-text: #95a5a6;
+  --footer-text: #95a5a6; /* Brighter gray for dark mode footer */
 }
 
-/* Original CSS remains unchanged */
-.body {
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 0;
+.manual-label {
+    background: var(--accent-color); /* Use the new accent color */
+}
+/* ------------------------------------ */
+/* --- BASE & UTILITY STYLES --- */
+/* ------------------------------------ */
+body { 
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+  max-width: 1000px; 
+  margin: 0 auto; 
+  padding: 20px; 
+  background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%); 
+  min-height: 100vh; 
+  transition: background-color 0.4s, color 0.4s;
+  color: var(--text-main);
+} 
+
+/* Header */ 
+.header { 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  background: var(--header-bg); 
+  border-radius: 12px; 
+  box-shadow: 0 5px 20px var(--shadow-color); 
+  padding: 20px 30px; 
+  margin-bottom: 40px; 
+  box-sizing: border-box; 
+  position: relative; 
+} 
+
+.header-dark { 
+  position: relative; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  gap: 6px; 
+  flex: 0 0 auto; 
+  cursor: pointer; 
+} 
+
+/* Dark Mode Toggle Switch */
+.mode-toggle { 
+  position: relative; 
+  width: 44px; 
+  height: 24px; 
+  background: var(--toggle-bg); 
+  border-radius: 20px; 
+  cursor: pointer; 
+  transition: background 0.3s ease; 
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); 
+} 
+
+.mode-toggle::after { 
+  content: ''; 
+  position: absolute; 
+  top: 2px; 
+  left: 2px; 
+  width: 20px; 
+  height: 20px; 
+  background: var(--toggle-handle); 
+  border-radius: 50%; 
+  transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); 
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+} 
+
+/* Dark Mode Toggle Active State */
+.dark-mode .mode-toggle {
+    background: var(--accent-color);
+}
+.dark-mode .mode-toggle::after { 
+    transform: translateX(20px); 
+    background: #fff;
+}
+
+
+.nav-links { 
+  display: flex; 
+  gap: 30px; 
+  align-items: center;
+} 
+
+.nav-links a { 
+  text-decoration: none; 
+  color: var(--text-secondary); 
+  font-weight: 600; 
+  font-size: 15px; 
+  transition: color 0.2s; 
+} 
+
+.nav-links a:hover { 
+  color: var(--accent-color); 
+} 
+
+.nav-links a.active { 
+  color: var(--accent-color); 
+} 
+
+.page-title { 
+  margin: 0; 
+  font-size: 24px; 
+  color: var(--text-main); 
+  letter-spacing: -0.5px; 
+} 
+
+/* --- PROFILE / TOOLTIP STYLES --- */
+.logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--accent-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.about-label {
+    font-size: 11px;
+    color: var(--accent-color);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Tooltip (Profile Card) */
+.tooltip {
+    display: none;
+    position: absolute;
+    top: 100%; 
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    width: 300px;
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 8px 30px var(--shadow-color);
+    z-index: 100;
+    border-top: 5px solid var(--accent-color);
+    pointer-events: auto; 
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(0); }
+    to { opacity: 1; transform: translateX(-50%) translateY(10px); }
+}
+
+.tooltip.visible {
+    display: block;
+}
+
+.profile-name {
+    font-size: 18px;
+    font-weight: 700;
     color: var(--text-main);
-    background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
-    min-height: 100vh;
-    transition: all 0.3s ease;
+    margin-bottom: 5px;
 }
 
-/* --- HEADER STYLES --- */
-.header {
-    background-color: var(--header-bg);
-    padding: 20px 40px;
-    box-shadow: 0 4px 6px var(--shadow-color);
+.profile-school {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--hover-border);
+    padding-bottom: 10px;
+}
+
+.profile-links {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.profile-links a {
+    font-size: 14px;
+    color: #3498db; /* keeping link blue */
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.profile-links a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+.profile-bio {
+    font-size: 12px;
+    color: var(--text-label);
+    margin-top: 5px;
+}
+
+/* Search Section */
+.search-container {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 15px 20px;
+    border-radius: 12px;
+    border: 2px solid var(--hover-border);
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    background: var(--card-bg);
+    color: var(--text-main);
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 4px rgba(142, 68, 173, 0.1);
+}
+
+/* Search Results Area */
+.search-results-section {
+    display: none; 
+    margin-bottom: 40px;
+    background: var(--header-bg); /* Use a slightly lighter bg for sections */
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid var(--hover-border);
+}
+
+.section-title {
+    font-size: 20px;
+    color: var(--text-main);
+    margin-bottom: 20px;
+    border-left: 4px solid var(--accent-color);
+    padding-left: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 10;
 }
 
-.page-title {
-    font-size: 24px;
-    font-weight: 700;
-    margin: 0;
+/* SLIDER STYLES (Horizontal Scroll) */
+.search-slider-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding-bottom: 15px;
+    scrollbar-width: thin; 
+    scrollbar-color: var(--accent-color) var(--hover-border);
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Custom Scrollbar for Webkit (Chrome, Safari) */
+.search-slider-container::-webkit-scrollbar {
+    height: 8px;
+}
+.search-slider-container::-webkit-scrollbar-track {
+    background: var(--hover-border);
+    border-radius: 4px;
+}
+.search-slider-container::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 4px;
+}
+
+/* Ensure cards in slider have fixed width */
+.search-slider-container .note-card {
+    min-width: 300px;
+    max-width: 350px;
+    flex-shrink: 0;
+}
+
+/* View All Link */
+.view-all-link {
+    font-size: 14px;
     color: var(--accent-color);
-}
-
-/* --- NAV STYLES --- */
-.nav-links a {
     text-decoration: none;
-    color: var(--text-main);
-    padding: 8px 15px;
-    margin: 0 5px;
-    border-radius: 8px;
-    font-weight: 500;
-    transition: background-color 0.2s, color 0.2s;
+    cursor: pointer;
+    background: rgba(142, 68, 173, 0.1);
+    padding: 5px 12px;
+    border-radius: 15px;
+    transition: all 0.2s;
+}
+.dark-mode .view-all-link {
+    background: rgba(155, 89, 182, 0.15);
 }
 
-.nav-links a:hover, .nav-links a.active {
-    background-color: var(--hover-border);
-    color: var(--active-color); /* Use active color for navigation hover */
+.view-all-link:hover {
+    background: var(--accent-color);
+    color: white;
 }
 
-/* --- CONTENT WRAPPER --- */
-#allContentSection {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
+/* Common Card Styles */
+.notes-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+  gap: 25px; 
+} 
+
+.note-card { 
+  background: var(--card-bg); 
+  border-radius: 12px; 
+  padding: 25px; 
+  box-shadow: 0 4px 15px var(--shadow-color); 
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; 
+  display: flex; 
+  flex-direction: column; 
+  height: 100%; 
+  box-sizing: border-box; 
+  text-decoration: none; 
+  color: inherit; 
+  border: 1px solid transparent; 
+} 
+
+.note-card:hover { 
+  transform: translateY(-5px); 
+  box-shadow: 0 8px 25px var(--shadow-color); 
+  border-color: var(--hover-border); 
+} 
+
+.note-date { 
+  font-size: 12px; 
+  color: var(--text-label); 
+  margin-bottom: 10px; 
+  font-weight: 600; 
+  text-transform: uppercase; 
+  letter-spacing: 0.5px; 
+} 
+
+.note-title { 
+  font-size: 18px; 
+  font-weight: 700; 
+  color: var(--text-main); 
+  margin: 0 0 10px 0; 
+  line-height: 1.4; 
+} 
+
+.note-preview { 
+  font-size: 14px; 
+  color: var(--text-secondary); 
+  line-height: 1.6; 
+  margin-bottom: 20px; 
+  flex-grow: 1; 
+  display: -webkit-box; 
+  -webkit-line-clamp: 4; 
+  -webkit-box-orient: vertical; 
+  overflow: hidden; 
+} 
+
+.tags { 
+  display: flex; 
+  gap: 8px; 
+  flex-wrap: wrap; 
+  margin-top: auto; 
+} 
+
+.tag { 
+  background: var(--hover-border); 
+  color: var(--text-secondary); 
+  padding: 4px 10px; 
+  border-radius: 6px; 
+  font-size: 11px; 
+  font-weight: 600; 
+  transition: all 0.2s; 
+  cursor: pointer; 
+} 
+
+.tag:hover { 
+  background: var(--accent-color); 
+  color: #fff; 
 }
 
-/* --- PACKAGE/SECTION STYLES --- */
+/* No Results */
+.no-results {
+    display: none;
+    text-align: center;
+    padding: 40px;
+    color: var(--text-secondary);
+}
+
+/* --- PACKAGE SECTION STYLES --- */
 .package-section {
-    background-color: var(--card-bg);
+    background: var(--card-bg);
     padding: 30px;
-    border-radius: 12px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px var(--shadow-color);
     margin-bottom: 40px;
-    box-shadow: 0 6px 15px var(--shadow-color);
-    border: 1px solid var(--hover-border);
 }
 
 .package-title {
     font-size: 22px;
-    font-weight: 600;
+    color: var(--text-main);
     margin-top: 0;
     margin-bottom: 15px;
-    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
-.package-section > p {
+.package-section p {
     color: var(--text-secondary);
+    font-size: 15px;
     margin-bottom: 25px;
 }
 
-/* --- DOCUMENT GRID (Default for TrendTestR and Future) --- */
 .doc-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
 }
 
-/* --- NEW: PERSONAL NOTES STACKED GRID LAYOUT --- */
-.notes-log-grid-stack {
-    display: grid;
-    /* Two columns: Left (stack) 40%, Right (Learning Notes) 60% */
-    grid-template-columns: 40% 60%;
-    gap: 20px;
-}
-
-.col-stack {
-    display: flex;
-    flex-direction: column;
-    /* Ensures Dev Log and Project Update cards take up the full column height */
-    justify-content: space-between; 
-    gap: 20px; /* Spacing between Dev Log and Project Update */
-}
-
-/* Responsive adjustment for the notes grid */
-@media (max-width: 992px) {
-    .notes-log-grid-stack {
-        /* On tablets, switch back to a single column */
-        grid-template-columns: 1fr;
-    }
-    .col-stack {
-        /* When stacked, let the cards flow naturally */
-        flex-direction: column;
-    }
-}
-/* --- END NEW: PERSONAL NOTES STACKED GRID LAYOUT --- */
-
-/* --- DOC ITEM STYLES --- */
 .doc-item {
-    padding: 20px;
+    background: var(--header-bg); /* Use a slightly different shade */
+    padding: 15px;
     border-radius: 10px;
-    background-color: var(--header-bg); /* Use header-bg for card body */
-    border: 1px solid var(--hover-border);
-    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
-    display: flex;
-    flex-direction: column;
+    border-left: 5px solid var(--accent-color);
+    transition: all 0.2s;
 }
 
-.doc-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px var(--shadow-color);
+.doc-item a {
+    font-weight: 600;
+    color: var(--text-main);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.doc-item a:hover {
+    color: var(--accent-color);
+}
+
+.doc-description {
+    font-size: 13px;
+    color: var(--text-label);
+    margin-top: 5px;
 }
 
 .doc-title-line {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 8px;
 }
 
-.doc-item a {
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--active-color); /* Links use the new active color (orange) */
-    text-decoration: none;
-    transition: color 0.2s;
-}
-
-.doc-item a:hover {
-    text-decoration: underline;
-}
-
-.doc-description {
-    font-size: 14px;
-    color: var(--text-secondary);
-    margin-top: 5px;
-}
-/* --- END DOC ITEM STYLES --- */
-
-
-/* --- BADGE STYLES (Manual Label uses new active color) --- */
+/* Status Badges - Keeping bright colors for contrast */
 .status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
     font-size: 10px;
-    padding: 3px 8px;
-    border-radius: 6px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: white; /* Default to white text on badges */
-    margin-left: 5px;
 }
 
 .available {
@@ -222,7 +511,7 @@
 }
 
 .manual-label {
-    background: var(--active-color); /* NEW: Soft Orange/Gold */
+    background: #9b59b6; /* Purple */
 }
 
 .doc-item.coming-soon {
@@ -240,7 +529,7 @@
 }
 
 .site-footer a {
-    color: var(--active-color); /* Footer links use active color */
+    color: var(--accent-color);
     text-decoration: none;
     font-weight: 600;
     transition: color 0.2s;
@@ -255,230 +544,36 @@
     color: var(--text-label);
 }
 
-/* --- PROFILE/TOOLTIP STYLES --- */
-.header-dark {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    position: relative;
+/* Responsive */
+@media (max-width: 600px) { 
+  .header { 
+    flex-direction: column; 
+    gap: 20px; 
+    padding: 20px; 
+  } 
+  
+  .nav-links { 
+    width: 100%; 
+    justify-content: center; 
+    gap: 20px; 
+  }
+
+  .search-slider-container .note-card {
+      min-width: 85%; 
+  }
+  
+  .package-title {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+  }
+
+  .tooltip {
+      width: 90%;
+      left: 5%;
+      transform: translateX(0) translateY(10px);
+  }
 }
-
-.logo img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-    border: 2px solid var(--active-color); /* Border uses active color */
-    transition: border-color 0.2s;
-}
-
-.header-dark:hover .logo img {
-    border-color: var(--active-color);
-}
-
-.about-label {
-    color: var(--text-main);
-    font-weight: 500;
-}
-
-.tooltip {
-    position: absolute;
-    top: 60px;
-    left: 0;
-    background-color: var(--header-bg);
-    border: 1px solid var(--hover-border);
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    z-index: 20;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
-}
-
-.tooltip.visible {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.profile-name {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 5px;
-    color: var(--accent-color);
-}
-
-.profile-school {
-    font-size: 14px;
-    color: var(--text-secondary);
-    margin-bottom: 10px;
-    border-bottom: 1px solid var(--hover-border);
-    padding-bottom: 10px;
-}
-
-.profile-links a {
-    display: inline-block;
-    margin-right: 15px;
-    color: var(--text-main);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s;
-}
-
-.profile-links a:hover {
-    color: var(--active-color);
-}
-
-.profile-bio {
-    font-size: 13px;
-    color: var(--text-secondary);
-    margin-top: 10px;
-    line-height: 1.5;
-}
-
-/* --- DARK MODE TOGGLE --- */
-.mode-toggle {
-    width: 40px;
-    height: 20px;
-    background-color: var(--toggle-bg);
-    border-radius: 10px;
-    position: relative;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-left: 15px;
-}
-
-.mode-toggle::after {
-    content: '';
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 16px;
-    height: 16px;
-    background-color: var(--toggle-handle);
-    border-radius: 50%;
-    transition: transform 0.3s, background-color 0.3s;
-}
-
-.dark-mode .mode-toggle::after {
-    transform: translateX(20px);
-}
-
-/* --- NOTE CARD STYLES (Used by JS rendering) --- */
-.note-card {
-    display: block;
-    text-decoration: none;
-    padding: 15px;
-    border-radius: 10px;
-    background-color: var(--card-bg);
-    box-shadow: 0 2px 5px var(--shadow-color);
-    transition: box-shadow 0.2s, transform 0.2s;
-    margin-bottom: 10px; /* Spacing between notes in the list */
-}
-
-.note-card:hover {
-    box-shadow: 0 4px 10px var(--shadow-color);
-    transform: translateY(-1px);
-}
-
-.note-date {
-    font-size: 11px;
-    color: var(--text-label);
-    margin-bottom: 5px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.note-title {
-    font-size: 16px;
-    font-weight: 600;
-    margin: 0 0 5px 0;
-    color: var(--text-main);
-}
-
-.note-preview {
-    font-size: 14px;
-    color: var(--text-secondary);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* Limit to 2 lines */
-    -webkit-box-orient: vertical;
-    line-height: 1.4em;
-    height: 2.8em; /* 2 lines * 1.4em */
-}
-
-/* --- TAG STYLES --- */
-.tags {
-    margin-top: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-}
-
-.tag {
-    font-size: 10px;
-    padding: 3px 8px;
-    border-radius: 5px;
-    background-color: var(--hover-border);
-    color: var(--accent-color);
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.tag:hover {
-    background-color: var(--active-color);
-    color: var(--header-bg); /* Use card background for contrast */
-}
-
-/* --- SEARCH INPUT STYLE --- */
-.search-input {
-    width: 100%;
-    padding: 10px 15px;
-    border: 1px solid #dee2e6; /* Light gray border */
-    border-radius: 8px;
-    font-size: 14px;
-    color: var(--text-main);
-    background-color: var(--card-bg);
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
-    transition: border-color 0.3s, box-shadow 0.3s;
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
-}
-
-.search-input:focus {
-    outline: none;
-    border-color: var(--active-color); /* NEW: Focus color is active orange */
-    box-shadow: 0 0 0 3px var(--hover-border);
-}
-
-.no-results {
-    color: var(--text-secondary);
-    text-align: center;
-    padding: 20px;
-    border: 1px dashed var(--hover-border);
-    border-radius: 8px;
-    margin-top: 15px;
-}
-
-.view-all-link {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-secondary);
-    text-decoration: none;
-    transition: color 0.2s;
-}
-
-.view-all-link:hover {
-    color: var(--active-color);
-    text-decoration: underline;
-}
-
-/* --- NEW: LEARNING NOTES SCROLL AREA AND TITLE STYLES --- */
-
-/* Title style: provides a divider */
 .notes-area-title {
     margin-bottom: 10px;
     padding-bottom: 5px;
@@ -487,17 +582,17 @@
     border-bottom: 1px solid var(--hover-border);
 }
 
-/* Scroll container style */
+
 .notes-scroll-area {
-    /* Height restriction: roughly the height of 3 note cards */
+  
     max-height: 350px; 
-    overflow-y: auto; /* Vertical scrollbar */
+    overflow-y: auto; 
     overflow-x: hidden;
-    padding-right: 10px; /* Space for scrollbar */
+    padding-right: 10px; 
     
-    /* Custom scrollbar styles */
+  
     scrollbar-width: thin; 
-    scrollbar-color: var(--active-color) var(--hover-border);
+    scrollbar-color: var(--accent-color) var(--hover-border);
 }
 
 .notes-scroll-area::-webkit-scrollbar {
@@ -510,14 +605,14 @@
 }
 
 .notes-scroll-area::-webkit-scrollbar-thumb {
-    background: var(--active-color);
+    background: var(--accent-color);
     border-radius: 3px;
 }
 
-/* Ensure note-cards inside the scroll area stack vertically like a list, not side-by-side */
+
 .notes-scroll-area .note-card {
-    margin-bottom: 15px; /* Spacing between notes */
-    border: 1px solid var(--hover-border); /* Add a border to differentiate list items */
+    margin-bottom: 15px; 
+    border: 1px solid var(--hover-border); 
     box-shadow: none;
     transition: all 0.2s;
 }
