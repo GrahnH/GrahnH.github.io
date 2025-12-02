@@ -10,11 +10,30 @@
 <body> 
 
   <!-- Header Section -->
-  <header class="header"> 
-    <div class="header-dark"> 
-      <div class="mode-toggle" id="themeToggle" title="Toggle Dark Mode (Coming Soon)"></div> 
-      <span style="font-size:10px; color:#999; font-weight:600;">Dark</span> 
+  <header class="header" id="site-header"> 
+    
+    <!-- RESTORED: Profile, Logo, and Tooltip Section -->
+    <div class="header-dark" id="profileToggle"> 
+      <div class="logo" id="logo-btn">
+         <!-- Note: Since images/logo.png is not provided, using a placeholder for now -->
+         <img src="https://images/logo.png" alt="Logo">
+      </div> 
+      <div class="about-label">About Grahn</div> 
+
+      <!-- Tooltip click --> 
+      <div class="tooltip" id="profile-tooltip"> 
+        <div class="profile-name">Grahn Huang</div> 
+        <div class="profile-school">Humboldt University of Berlin · Department of Biology</div> 
+        <div class="profile-links"> 
+          <a href="https://github.com/grahnh" target="_blank" rel="noreferrer">GitHub</a> 
+          <a href="mailto:huangyue@hu-berlin.de">Email</a> 
+        </div> 
+        <div class="profile-bio">
+          Yuewen Huang • Undergraduate in Biophysics • CRAN package author</div>
+        <div class="profile-bio">Interested in building small tools that help research and learning</div>
+      </div> 
     </div> 
+    <!-- END RESTORED SECTION -->
 
     <h1 class="page-title">Documentation Center</h1> 
 
@@ -22,6 +41,8 @@
       <a href="index.html" class="active">Home</a> 
       <a href="#">Learning Notes</a> 
       <a href="dev-log.html">Dev Log</a> 
+      <!-- NEW: Dark Mode Toggle Button -->
+      <div class="mode-toggle" id="darkModeToggle"></div>
     </nav> 
   </header> 
 
@@ -51,10 +72,10 @@
   <!-- Main Content Area -->
   <div id="allContentSection">
       
-      <!-- **RESTORED: TrendTestR Package Section** --> 
+      <!-- RESTORED: TrendTestR Package Section --> 
       <div class="package-section"> 
         <h2 class="package-title"> 
-          🔍 TrendTestR Documentation 
+           TrendTestR Documentation 
           <span class="status-badge r-package">R Package</span> 
           <span class="status-badge available">Available</span> 
         </h2> 
@@ -86,9 +107,9 @@
         </div> 
       </div> 
 
-      <!-- **RESTORED: Future Package Section** --> 
+      <!-- RESTORED: Future Package Section --> 
       <div class="package-section"> 
-        <h2 class="package-title">🚀 Future Project <span class="status-badge coming-soon-badge">Coming Soon</span></h2> 
+        <h2 class="package-title"> Future Project <span class="status-badge coming-soon-badge">Coming Soon</span></h2> 
         <p>Space reserved for upcoming packages, tools, or documentation projects.</p> 
 
         <div class="doc-grid"> 
@@ -106,7 +127,7 @@
       <!-- Recent Learning Notes (Dynamically loaded by JS) -->
       <h2 class="section-title" style="margin-top: 40px;">
           Recent Learning Notes
-          <a href="#" style="font-size:14px; color:#8e44ad; text-decoration:none; margin-left:auto;">View Archive →</a>
+          <a href="#" style="font-size:14px; color:var(--accent-color); text-decoration:none; margin-left:auto;">View Archive →</a>
       </h2> 
       
       <div class="notes-grid" id="recentNotesContainer"> 
@@ -116,7 +137,7 @@
       <!-- Development Log Preview (Dynamically loaded by JS) -->
       <h2 class="section-title" style="margin-top: 50px;">
           Latest Dev Updates
-          <a href="dev-log.html" style="font-size:14px; color:#8e44ad; text-decoration:none; margin-left:auto;">Full Log →</a>
+          <a href="dev-log.html" style="font-size:14px; color:var(--accent-color); text-decoration:none; margin-left:auto;">Full Log →</a>
       </h2> 
       
       <div class="notes-grid" id="latestDevLogContainer">
@@ -125,12 +146,48 @@
       
   </div>
 
+  <!-- NEW: Footer Section -->
+  <footer class="site-footer">
+    Documentation site powered by 
+    <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+    <span class="separator">/</span>
+    Continuously updated with new projects and insights
+  </footer>
+  <!-- END NEW: Footer Section -->
+
   <!-- 1. Learning Notes Data -->
   <script src="learning-notes-data.js"></script>
   <!-- 2. Dev Log Data -->
   <script src="dev-log-data.js"></script>
-  <!-- 3. Logic Script -->
+  <!-- 3. Logic Script (Updated for Dark Mode init/toggle) -->
   <script src="script.js"></script>
+  
+  <script>
+    // Tooltip functionality (JS for showing/hiding the profile card)
+    document.getElementById('profileToggle').addEventListener('click', function(event) {
+        event.stopPropagation(); // Prevents click from immediately closing it
+        const tooltip = document.getElementById('profile-tooltip');
+        tooltip.classList.toggle('visible');
+    });
+
+    // Close tooltip when clicking anywhere else
+    document.addEventListener('click', function(event) {
+        const tooltip = document.getElementById('profile-tooltip');
+        const toggle = document.getElementById('profileToggle');
+        
+        // If the click is not inside the toggle area and the tooltip is visible, close it
+        if (tooltip.classList.contains('visible') && !toggle.contains(event.target)) {
+            tooltip.classList.remove('visible');
+        }
+    });
+
+    // Dark Mode Toggle Listener (Logic handled in script.js)
+    document.getElementById('darkModeToggle').addEventListener('click', () => {
+        const isDarkMode = document.body.classList.toggle('dark-mode');
+        // Save preference to localStorage
+        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+    });
+  </script>
 
 </body> 
 </html>
