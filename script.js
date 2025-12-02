@@ -4,6 +4,12 @@
  * @param {string} containerId - Target HTML element ID
  * @param {boolean} isSlider - If true, applies styling for horizontal slider
  */
+/**
+ * Render note cards into a container
+ * @param {Array} notesData - Array of note objects
+ * @param {string} containerId - Target HTML element ID
+ * @param {boolean} isSlider - (UNUSED for this specific fix)
+ */
 function renderNotesPreview(notesData, containerId, isSlider = false) {
     const container = document.getElementById(containerId);
     if (!container) return;
@@ -12,6 +18,7 @@ function renderNotesPreview(notesData, containerId, isSlider = false) {
     
     // Handle empty data
     if (!notesData || notesData.length === 0) {
+        // Only display 'No content' if not the search results container
         if(containerId !== 'searchResultsContainer') {
              container.innerHTML = '<div style="color:#999; padding:20px;">No content available</div>';
         }
@@ -21,7 +28,8 @@ function renderNotesPreview(notesData, containerId, isSlider = false) {
     notesData.forEach(note => {
         const card = document.createElement('a');
         card.href = note.link || '#';
-        card.className = 'note-card';
+        // 修正：确保卡片不再使用原有的 grid 样式，以便在滚动区域内垂直堆叠
+        card.className = 'note-card'; 
         
         // Generate Tag HTML if tags exist
         let tagsHtml = '';
@@ -33,8 +41,6 @@ function renderNotesPreview(notesData, containerId, isSlider = false) {
         }
 
         // Format content (simple truncation for preview)
-        // For Dev Logs, we might want to split by semicolon if it's a list string, 
-        // but for safety we just display it as text.
         let contentDisplay = note.content;
         
         card.innerHTML = `
@@ -68,26 +74,26 @@ function handleTagClick(event, tagName) {
 }
 
 /**
- * Main Search Logic
+ * Main Search Logic for Learning Notes Card: 
+ * Switches between Recent Notes view and Search Results view.
  */
 function searchLearningNotes() {
     const searchInput = document.getElementById('notesSearchInput');
     const query = searchInput.value.toLowerCase().trim();
     
-    const searchSection = document.getElementById('searchSection');
+    const recentNotesArea = document.getElementById('recentNotesArea');
+    const searchResultsArea = document.getElementById('searchResultsArea');
     const searchResultsContainer = document.getElementById('searchResultsContainer');
-    const viewAllLink = document.getElementById('viewAllResults');
-    const noResultsSection = document.getElementById('noResults');
-    const allContentSection = document.getElementById('allContentSection'); 
+    const noResultsSection = document.getElementById('noSearchResults');
+    const resultCountSpan = document.getElementById('resultCount');
 
-    // 1. If query is empty, hide search section and show main content
+    
     if (!query) {
-        searchSection.style.display = 'none';
-        allContentSection.style.display = 'block'; 
+        recentNotesArea.style.display = 'block';
+        searchResultsArea.style.display = 'none';
         return;
     }
 
-    // 2. Filter Data
     const allNotes = window.learningNotesData || [];
     const filteredNotes = allNotes.filter(note => {
         const titleMatch = (note.title || '').toLowerCase().includes(query);
@@ -96,55 +102,34 @@ function searchLearningNotes() {
         return titleMatch || contentMatch || tagsMatch;
     });
 
-    // 3. Show Search Section
-    searchSection.style.display = 'block';
-    
-    // Optional: Hide bottom content while searching to reduce clutter
-    // allContentSection.style.display = 'none'; 
+
+    recentNotesArea.style.display = 'none';
+    searchResultsArea.style.display = 'block';
 
     if (filteredNotes.length > 0) {
         noResultsSection.style.display = 'none';
-        searchResultsContainer.style.display = 'flex'; // Flex is needed for slider
-        viewAllLink.style.display = 'none'; 
-
-        // REQUIREMENT: Preview Top 3 Results
-        const top3Notes = filteredNotes.slice(0, 3);
+        resultCountSpan.textContent = `(${filteredNotes.length} results)`;
         
-        // Reset container to slider mode
-        searchResultsContainer.className = 'search-slider-container';
-        renderNotesPreview(top3Notes, 'searchResultsContainer', true);
-
-        // REQUIREMENT: "View All" link if more than 3
-        if (filteredNotes.length > 3) {
-            viewAllLink.style.display = 'inline-block';
-            viewAllLink.textContent = `View All ${filteredNotes.length} Results →`;
-            
-            // Handle "View All" click
-            viewAllLink.onclick = function(e) {
-                e.preventDefault();
-                // Change layout to grid to show everything
-                searchResultsContainer.className = 'notes-grid'; 
-                renderNotesPreview(filteredNotes, 'searchResultsContainer', false);
-                viewAllLink.style.display = 'none'; 
-            };
-        }
-
+        renderNotesPreview(filteredNotes, 'searchResultsContainer', false);
+        
     } else {
-        // No results found
         searchResultsContainer.innerHTML = '';
-        viewAllLink.style.display = 'none';
         noResultsSection.style.display = 'block';
+        resultCountSpan.textContent = `(0 results)`;
     }
 }
 
+
 // Initialization on page load
 document.addEventListener('DOMContentLoaded', function() {
-    // 1. Load Recent Notes
+    // 1. Load Recent Notes (Top 3 only)
     const notes = window.learningNotesData || [];
-    renderNotesPreview(notes, 'recentNotesContainer');
+   
+    const recentNotes = notes.slice(0, 3);
+    
+    renderNotesPreview(recentNotes, 'recentNotesContainer', false);
 
-    // 2. Load Dev Log (Restored content)
-    // We limit main page dev logs to top 4 to avoid too much scrolling
+    // 2. Load Dev Log (Original logic maintained)
     const devLogs = window.devLogData || [];
     const recentDevLogs = devLogs.slice(0, 4); 
     renderNotesPreview(recentDevLogs, 'latestDevLogContainer');
@@ -154,12 +139,46 @@ document.addEventListener('DOMContentLoaded', function() {
     if (searchInput) {
         searchInput.addEventListener('input', searchLearningNotes);
         
+       
         searchInput.addEventListener('focus', function() {
-            this.style.borderColor = '#8e44ad';
+           
+            this.style.borderColor = 'var(--accent-color)';
         });
         
         searchInput.addEventListener('blur', function() {
+           
             this.style.borderColor = '#dee2e6';
         });
     }
 });
+
+    notesData.forEach(note => {
+        const card = document.createElement('a');
+        card.href = note.link || '#';
+        card.className = 'note-card';
+        
+        // Generate Tag HTML if tags exist
+        let tagsHtml = '';
+        if (note.tags && note.tags.length > 0) {
+            tagsHtml = '<div class="tags">' + note.tags.map(tag => 
+                // Add onclick event to handle tag search
+                `<span class="tag" onclick="handleTagClick(event, '${tag}')">${tag}</span>`
+            ).join('') + '</div>';
+        }
+
+        // Format content (simple truncation for preview)
+        // For Dev Logs, we might want to split by semicolon if it's a list string, 
+        // but for safety we just display it as text.
+        let contentDisplay = note.content;
+        
+        card.innerHTML = `
+            <div class="note-date">${note.date}</div>
+            <h3 class="note-title">${note.title || 'Update'}</h3>
+            <div class="note-preview">${contentDisplay}</div>
+            ${tagsHtml}
+        `;
+
+        container.appendChild(card);
+    });
+}
+
