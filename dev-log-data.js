@@ -3,6 +3,15 @@
 
 const devLogData = [
     {
+    id: 7,
+    date: "2025-12-02",
+    title: "Frontend Refactor & UI Improvements",
+    content: "Split index page into separate JS/CSS files, updated the search function, implemented dark mode, and refined several AI-generated UI components.",
+    link: "dev-log.html",
+    tags: ["Frontend", "Refactor", "Search", "Dark Mode"]
+    },
+
+    {
         id: 1,
         date: "2025-09-18",
         title: "Documentation Setup",
