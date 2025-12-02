@@ -659,7 +659,7 @@ body {
 .notes-devlog #latestDevLogContainer,
 .notes-news #latestNewsContainer {
   background: rgba(155, 89, 182, 0.06); /* soft accent tint for light mode */
-  border-radius: 10px;
+  border-radius: 4px;
   padding: 10px 12px;
   border-left: 3px solid var(--accent-color);
 }
@@ -768,6 +768,9 @@ body {
 /* Hover lift effect */
 .package-section:not(.notes-section) .doc-item:hover {
   transform: translateY(-3px);
+   background: color-mix(in srgb, var(--accent-color) 8%, var(--card-bg));
+    border-left-color: var(--accent-color);
+    box-shadow: 0 10px 26px var(--shadow-color);
   box-shadow: 0 10px 26px var(--shadow-color);
 }
 
@@ -832,4 +835,122 @@ body {
     left: 5%;
     transform: translateX(0) translateY(10px);
   }
+}
+
+/* =========================================================
+   "View all ..." link – modern pill-style
+   ========================================================= */
+
+.view-all-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent-color);
+    text-decoration: none;
+    background: transparent;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+/* Small arrow icon using ::after */
+.view-all-link::after {
+    content: "↗";
+    font-size: 0.9em;
+}
+
+/* Light hover lift */
+.view-all-link:hover {
+    background: color-mix(in srgb, var(--accent-color) 12%, var(--card-bg));
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px var(--shadow-color);
+    border-color: transparent;
+}
+
+.dark-mode .view-all-link {
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+
+/* =========================================================
+   Learning Notes cards (Recent Notes + Search Results)
+   Header-style colored top bar + white body
+   ========================================================= */
+
+.notes-learning .notes-scroll-area .note-card {
+    position: relative;
+    overflow: hidden;
+    /* Remove "list-like" style from generic scroll area cards */
+    margin-bottom: 16px;
+    border: none;
+    box-shadow: 0 6px 18px var(--shadow-color);
+    border-radius: 12px;
+    padding: 12px 14px 14px 14px;
+    background: var(--card-bg);
+}
+
+/* Colored header bar behind date + title */
+.notes-learning .notes-scroll-area .note-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 52px;                 /* height of the colored header */
+    background: var(--accent-color);
+}
+
+/* Place date + title on top of the header bar */
+.notes-learning .notes-scroll-area .note-date,
+.notes-learning .notes-scroll-area .note-title {
+    position: relative;
+    color: #ffffff;
+}
+
+.notes-learning .notes-scroll-area .note-date {
+    font-size: 11px;
+    font-weight: 600;
+    opacity: 0.9;
+    margin-bottom: 2px;
+}
+
+.notes-learning .notes-scroll-area .note-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+}
+
+/* Body text stays on normal background */
+.notes-learning .notes-scroll-area .note-preview {
+    position: relative;
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    -webkit-line-clamp: 3;
+}
+
+/* Tags as soft pills */
+.notes-learning .notes-scroll-area .tags {
+    position: relative;
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.notes-learning .notes-scroll-area .tag {
+    background: rgba(0, 0, 0, 0.03);
+    color: var(--text-secondary);
+    border-radius: 999px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.dark-mode .notes-learning .notes-scroll-area .tag {
+    background: rgba(255, 255, 255, 0.06);
 }
