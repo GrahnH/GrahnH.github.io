@@ -5,8 +5,8 @@
   /* Light Mode Defaults */
   --bg-start: #f5f7fa;
   --bg-end: #c3cfe2;
-  --header-bg: #fff;
-  --card-bg: #fff;
+  --header-bg: #ffffff;
+  --card-bg: #ffffff;
   --text-main: #2c3e50;
   --text-secondary: #7f8c8d;
   --text-label: #95a5a6;
@@ -14,8 +14,8 @@
   --hover-border: rgba(142, 68, 173, 0.2);
   --shadow-color: rgba(0, 0, 0, 0.08);
   --toggle-bg: #e0e0e0;
-  --toggle-handle: #fff;
-  --footer-text: #7f8c8d; /* Footer specific text color */
+  --toggle-handle: #ffffff;
+  --footer-text: #7f8c8d;
 }
 
 .dark-mode {
@@ -26,12 +26,12 @@
   --text-main: #ecf0f1;
   --text-secondary: #bdc3c7;
   --text-label: #7f8c8d;
-  --accent-color: #9b59b6; /* slightly brighter accent for dark mode */
+  --accent-color: #9b59b6;
   --hover-border: rgba(155, 89, 182, 0.4);
   --shadow-color: rgba(0, 0, 0, 0.4);
-  --toggle-bg: #555;
-  --toggle-handle: #ccc;
-  --footer-text: #95a5a6; /* Brighter gray for dark mode footer */
+  --toggle-bg: #555555;
+  --toggle-handle: #cccccc;
+  --footer-text: #95a5a6;
 }
 
 /* ------------------------------------
@@ -54,8 +54,8 @@ body {
   align-items: center;
   justify-content: space-between;
   background: var(--header-bg);
-  border-radius: 12px;
-  box-shadow: 0 5px 20px var(--shadow-color);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px var(--shadow-color);
   padding: 20px 30px;
   margin-bottom: 40px;
   box-sizing: border-box;
@@ -94,17 +94,16 @@ body {
   height: 20px;
   background: var(--toggle-handle);
   border-radius: 50%;
-  transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  transition:  left 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Dark Mode Toggle Active State */
 .dark-mode .mode-toggle {
   background: var(--accent-color);
 }
 .dark-mode .mode-toggle::after {
-  transform: translateX(20px);
-  background: #fff;
+   left: calc(100% - 22px); 
+  background: #ffffff;
 }
 
 .nav-links {
@@ -167,7 +166,7 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* Tooltip (Profile Card) */
+/* Desktop tooltip */
 .tooltip {
   display: none;
   position: absolute;
@@ -223,7 +222,7 @@ body {
 
 .profile-links a {
   font-size: 14px;
-  color: #3498db; /* keeping link blue */
+  color: #3498db;
   text-decoration: none;
   font-weight: 600;
   transition: color 0.2s;
@@ -251,7 +250,7 @@ body {
 .search-input {
   width: 100%;
   padding: 15px 20px;
-  border-radius: 5px;
+  border-radius: 6px;
   border: 2px solid var(--hover-border);
   font-size: 16px;
   transition: all 0.3s ease;
@@ -266,13 +265,13 @@ body {
   box-shadow: 0 0 0 4px rgba(142, 68, 173, 0.1);
 }
 
-/* Search Results Area (used on other pages) */
+/* Search Results Area */
 .search-results-section {
   display: none;
   margin-bottom: 40px;
-  background: var(--header-bg); /* slightly lighter for sections */
+  background: var(--header-bg);
   padding: 20px;
-  border-radius: 15px;
+  border-radius: 16px;
   border: 1px solid var(--hover-border);
 }
 
@@ -287,7 +286,7 @@ body {
   align-items: center;
 }
 
-/* Slider-style container for search results (horizontal scroll) */
+/* Slider-style container for search results */
 .search-slider-container {
   display: flex;
   overflow-x: auto;
@@ -299,7 +298,6 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Custom Scrollbar for Webkit (Chrome, Safari) */
 .search-slider-container::-webkit-scrollbar {
   height: 8px;
 }
@@ -312,13 +310,11 @@ body {
   border-radius: 4px;
 }
 
-/* Ensure cards in slider have fixed width */
 .search-slider-container .note-card {
   min-width: 300px;
   max-width: 350px;
   flex-shrink: 0;
 }
-
 
 /* ------------------------------------
    COMMON NOTE CARD STYLES
@@ -331,7 +327,7 @@ body {
 
 .note-card {
   background: var(--card-bg);
-  border-radius: 5px;
+  border-radius: 10px;
   padding: 25px;
   box-shadow: 0 4px 15px var(--shadow-color);
   transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
@@ -390,7 +386,7 @@ body {
   background: var(--hover-border);
   color: var(--text-secondary);
   padding: 4px 10px;
-  border-radius: 6px;
+  border-radius: 999px;
   font-size: 11px;
   font-weight: 600;
   transition: all 0.2s;
@@ -399,7 +395,7 @@ body {
 
 .tag:hover {
   background: var(--accent-color);
-  color: #fff;
+  color: #ffffff;
 }
 
 /* No Results */
@@ -414,10 +410,10 @@ body {
    PACKAGE SECTION (OUTER BOXES)
 ------------------------------------ */
 .package-section {
-  background: var(--card-bg);
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 5px 20px var(--shadow-color);
+  background: color-mix(in srgb, var(--card-bg) 92%, var(--accent-color) 8%);
+  padding: 28px 30px;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px var(--shadow-color);
   margin-bottom: 40px;
 }
 
@@ -438,25 +434,26 @@ body {
 }
 
 .notes-title {
-    color: var(--accent-color);
-    border-bottom: 3px solid var(--accent-color);
-    padding-bottom: 4px;   /* slight spacing from text */
+  color: var(--accent-color);
+  border-bottom: 3px solid var(--accent-color);
+  padding-bottom: 4px;
 }
 
-/* Grid of documentation cards inside a package section */
+/* Grid of documentation cards */
 .doc-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 20px;
 }
 
-/* Base doc-item card (will be specialized later) */
+/* Base doc-item card */
 .doc-item {
   background: var(--header-bg);
   padding: 15px;
-  border-radius: 5px;
+  border-radius: 10px;
   border-left: 5px solid var(--accent-color);
-  transition: all 0.2s;
+  box-shadow: 0 4px 14px var(--shadow-color);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-left-color 0.2s ease;
 }
 
 .doc-item a {
@@ -492,32 +489,30 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: white;
+  color: #ffffff;
 }
 
 .available {
-  background: #2ecc71; /* Green */
+  background: #2ecc71;
 }
 
 .coming-soon-badge {
-  background: #f1c40f; /* Yellow */
+  background: #f1c40f;
   color: #34495e;
 }
 
 .r-package {
-  background: #e74c3c; /* Red */
+  background: #e74c3c;
 }
 
 .vignette-label {
-  background: #3498db; /* Blue */
+  background: #3498db;
 }
 
-/* Manual badge: keep a consistent purple tone */
 .manual-label {
   background: #9b59b6;
 }
 
-/* Coming soon cards lower emphasis */
 .doc-item.coming-soon {
   opacity: 0.6;
 }
@@ -563,7 +558,6 @@ body {
   margin-bottom: 8px;
 }
 
-/* Colored underline below Personal Notes & Logs title */
 .notes-section .notes-title::after {
   display: none;
 }
@@ -575,11 +569,10 @@ body {
 
 /* ------------------------------------
    PERSONAL NOTES & LOGS — GRID LAYOUT
-   Left column: News (top) + DevLog (bottom), right: Learning Notes
 ------------------------------------ */
 .notes-log-grid {
   display: grid;
-  grid-template-columns: 1fr 2fr; /* left : right = 1 : 2 */
+  grid-template-columns: 1fr 2fr;
   grid-template-rows: auto auto;
   grid-template-areas:
     "news notes"
@@ -587,7 +580,6 @@ body {
   gap: 20px;
 }
 
-/* Assign areas */
 .notes-log-grid .notes-news {
   grid-area: news;
 }
@@ -605,7 +597,7 @@ body {
 ------------------------------------ */
 .notes-section .notes-item {
   background: var(--card-bg);
-  border-radius: 5px;
+  border-radius: 12px;
   padding: 18px 20px;
   border-left: 5px solid var(--accent-color);
   box-shadow: 0 6px 18px var(--shadow-color);
@@ -613,21 +605,18 @@ body {
   flex-direction: column;
 }
 
-/* Titles inside Personal Notes cards */
 .notes-section .notes-item .doc-title-line a {
   font-size: 17px;
   font-weight: 550;
   color: var(--accent-color);
 }
 
-/* Subtitle text inside these cards */
 .notes-section .notes-item .doc-description {
   margin-top: 4px;
   font-size: 13px;
   color: var(--text-secondary);
 }
 
-/* "Latest Entry" label inside Dev Log / Notes */
 .notes-section .latest-entry-title {
   margin-top: 14px;
   margin-bottom: 6px;
@@ -636,22 +625,20 @@ body {
   color: var(--text-main);
 }
 
-/* Inner panel for latest entries (Dev Log / News) */
+/* Inner panel for latest entries */
 .notes-devlog #latestDevLogContainer,
 .notes-news #latestNewsContainer {
-  background: rgba(155, 89, 182, 0.06); /* soft accent tint for light mode */
-  border-radius: 1px;
+  background: rgba(80, 180, 460, 0.06);
+  border-radius: 6px;
   padding: 10px 12px;
   border-left: 3px solid var(--accent-color);
 }
 
-/* Dark mode tint adjustment */
 .dark-mode .notes-devlog #latestDevLogContainer,
 .dark-mode .notes-news #latestNewsContainer {
   background: rgba(155, 89, 182, 0.18);
 }
 
-/* Flatten note cards inside the inner panel */
 .notes-devlog #latestDevLogContainer .note-card,
 .notes-news #latestNewsContainer .note-card {
   padding: 6px 0;
@@ -661,7 +648,6 @@ body {
   background: transparent;
 }
 
-/* Smaller preview text inside compact panels */
 .notes-devlog #latestDevLogContainer .note-preview,
 .notes-news #latestNewsContainer .note-preview {
   font-size: 13px;
@@ -691,18 +677,16 @@ body {
 .notes-scroll-area::-webkit-scrollbar {
   width: 6px;
 }
-
 .notes-scroll-area::-webkit-scrollbar-track {
   background: var(--hover-border);
   border-radius: 3px;
 }
-
 .notes-scroll-area::-webkit-scrollbar-thumb {
   background: var(--accent-color);
   border-radius: 3px;
 }
 
-/* Make scroll-area cards look more like list items */
+/* Base style for scroll-area cards */
 .notes-scroll-area .note-card {
   margin-bottom: 15px;
   border: 1px solid var(--hover-border);
@@ -723,39 +707,33 @@ body {
 }
 
 /* ------------------------------------
-   PACKAGE DOC CARDS (TrendTestR, Future Project)
-   Theme-aware with accent left border
+   PACKAGE DOC CARDS (non Notes-section)
 ------------------------------------ */
 .package-section:not(.notes-section) .doc-item {
   background: var(--card-bg);
-  border-radius: 5px;
+  border-radius: 10px;
   padding: 16px 18px;
   border-left: 4px solid var(--accent-color);
   box-shadow: 0 6px 18px var(--shadow-color);
 }
 
-/* Title line: stronger link */
 .package-section:not(.notes-section) .doc-item .doc-title-line a {
   font-size: 16px;
   font-weight: 650;
 }
 
-/* Softer description text */
 .package-section:not(.notes-section) .doc-item .doc-description {
   font-size: 13px;
   color: var(--text-secondary);
 }
 
-/* Hover lift effect */
 .package-section:not(.notes-section) .doc-item:hover {
   transform: translateY(-3px);
-   background: color-mix(in srgb, var(--accent-color) 8%, var(--card-bg));
-    border-left-color: var(--accent-color);
-    box-shadow: 0 10px 26px var(--shadow-color);
+  background: color-mix(in srgb, var(--accent-color) 8%, var(--card-bg));
+  border-left-color: var(--accent-color);
   box-shadow: 0 10px 26px var(--shadow-color);
 }
 
-/* Optional highlighted documentation card */
 .doc-item-highlight {
   background: rgba(52, 152, 219, 0.08);
   border-left-color: #3498db;
@@ -763,6 +741,183 @@ body {
 
 .dark-mode .doc-item-highlight {
   background: rgba(52, 152, 219, 0.18);
+}
+
+
+/* =========================================================
+   "View all ..." link – modern pill-style
+========================================================= */
+.view-all-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent-color);
+  text-decoration: none;
+  background: transparent;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  transition: background 0.2s ease, color 0.2s ease,
+              transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.view-all-link::after {
+  content: "↗";
+  font-size: 0.9em;
+}
+
+.view-all-link:hover {
+  background: color-mix(in srgb, var(--accent-color) 12%, var(--card-bg));
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--shadow-color);
+  border-color: transparent;
+}
+
+.dark-mode .view-all-link {
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+.view-all-link:visited {
+  color: var(--accent-color);
+}
+
+@media (max-width: 600px) {
+  .view-all-link {
+    background: color-mix(in srgb, var(--accent-color) 10%, var(--card-bg));
+  }
+}
+
+/* =========================================================
+   Learning Notes cards (Recent Notes + Search Results)
+========================================================= */
+.notes-learning .notes-scroll-area .note-card {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 16px;
+  border: none;
+  box-shadow: 0 6px 18px var(--shadow-color);
+  border-radius: 12px;
+  padding: 12px 14px 14px 14px;
+  background: var(--card-bg);
+}
+
+.notes-learning .notes-scroll-area .note-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 52px;
+  background: var(--accent-color);
+}
+
+.notes-learning .notes-scroll-area .note-date,
+.notes-learning .notes-scroll-area .note-title {
+  position: relative;
+  color: #ffffff;
+}
+
+.notes-learning .notes-scroll-area .note-date {
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.9;
+  margin-bottom: 2px;
+}
+
+.notes-learning .notes-scroll-area .note-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+}
+
+.notes-learning .notes-scroll-area .note-preview {
+  position: relative;
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  -webkit-line-clamp: 3;
+}
+
+.notes-learning .notes-scroll-area .tags {
+  position: relative;
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.notes-learning .notes-scroll-area .tag {
+  background: rgba(0, 0, 0, 0.03);
+  color: var(--text-secondary);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.dark-mode .notes-learning .notes-scroll-area .tag {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ========================================================
+   Latest entry preview box inside Personal Notes cards
+========================================================= */
+.notes-section .latest-entry-box {
+  margin-top: 15px;
+  padding: 12px 14px;
+  border-radius: 6px;
+  background: rgba(80, 180, 460, 0.06);
+  border-left: 3px solid var(--accent-color);
+}
+
+.dark-mode .notes-section .latest-entry-box {
+  background: rgba(140, 80, 160, 0.15);
+}
+
+.notes-section .latest-entry-header {
+  color: var(--accent-color);
+  font-weight: 700;
+  font-size: 0.75em;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.notes-section .latest-entry-header .entry-icon {
+  font-size: 1.1em;
+  line-height: 1;
+}
+
+.notes-section .latest-entry-body {
+  color: var(--text-secondary);
+  font-size: 0.90em;
+  line-height: 1.0;
+}
+
+.notes-section .latest-entry-box .latest-entry-header + .latest-entry-body {
+  margin-bottom: 8px;
+}
+
+.notes-section .latest-entry-box .latest-entry-header:not(:first-of-type) {
+  margin-top: 10px;
+  padding-top: 6px;
+  border-top: 1px solid var(--hover-border);
+}
+
+/* Hover for Dev Log & News cards */
+.notes-section .notes-devlog,
+.notes-section .notes-news {
+  transition: all 0.3s ease;
+}
+
+.notes-section .notes-devlog:hover,
+.notes-section .notes-news:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 26px var(--shadow-color);
 }
 
 /* ------------------------------------
@@ -776,7 +931,7 @@ body {
 
 @media (max-width: 800px) {
   .notes-log-grid {
-    grid-template-columns: 1fr;  /* Single column */
+    grid-template-columns: 1fr;
     grid-template-areas:
       "notes"
       "news"
@@ -788,6 +943,7 @@ body {
   }
 }
 
+/* Mobile layout + mobile drawer */
 @media (max-width: 600px) {
   .header {
     flex-direction: column;
@@ -810,19 +966,17 @@ body {
     align-items: flex-start;
     gap: 5px;
   }
+}
 
-    /* ==========================================
-     MOBILE TOOLTIP → SLIDE-IN DRAWER
-     ========================================== */
-  
-  @media (max-width: 600px) {
+/* ==========================================
+   MOBILE TOOLTIP → SLIDE-IN DRAWER
+   ========================================== */
+@media (max-width: 600px) {
   .tooltip {
-    /* Reset positioning */
     position: fixed;
     top: 0;
     left: 0;
     transform: translateX(-100%);  /* Hidden off-screen */
-
     width: 280px;
     max-width: 85vw;
     height: 100vh;
@@ -831,13 +985,12 @@ body {
     border-top: none;
     border-right: 3px solid var(--accent-color);
     padding: 25px 20px;
-
     box-shadow: 2px 0 20px var(--shadow-color);
     z-index: 1000;
 
-    /* IMPORTANT: disable initial animation & transition */
     animation: none;           /* override desktop fadeIn */
-    transition: none;          /* do NOT animate transform on load */
+    
+    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
     will-change: transform;
     display: block;
@@ -846,16 +999,12 @@ body {
     pointer-events: none;
   }
 
-  /* When visible: slide in from left using transform */
   .tooltip.visible {
     transform: translateX(0);
     pointer-events: auto;
-
-    /* Only now enable smooth slide animation */
-    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+   
   }
 
-  /* Close button for mobile drawer */
   .tooltip::before {
     content: "×";
     position: absolute;
@@ -878,7 +1027,6 @@ body {
     background: var(--hover-border);
     color: var(--text-main);
   }
-
   /* Adjust tooltip content for mobile drawer */
   .profile-name {
     font-size: 20px;
@@ -931,7 +1079,6 @@ body {
     line-height: 1.6;
   }
 
-  /* Overlay backdrop when drawer is open - smoother */
   body::after {
     content: "";
     position: fixed;
@@ -947,211 +1094,21 @@ body {
     will-change: opacity;
   }
 
-  /* Show backdrop when tooltip is visible */
   body.profile-open::after {
     opacity: 1;
     pointer-events: auto;
   }
-}
-}
+  .notes-learning .notes-scroll-area .note-card::before {
+    height: 72px;  
+  }
 
-/* =========================================================
-   "View all ..." link – modern pill-style
-   ========================================================= */
-
-.view-all-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
+  .notes-learning .notes-scroll-area .note-title {
     font-size: 13px;
-    font-weight: 500;
-    color: var(--accent-color);
-    text-decoration: none;
-    background: transparent;
-    padding: 4px 10px;
-    border-radius: 999px;
-    border: 1px solid rgba(0, 0, 0, 0.04);
-    transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
-}
+    line-height: 1.3;
+  }
 
-/* Small arrow icon using ::after */
-.view-all-link::after {
-    content: "↗";
-    font-size: 0.9em;
-}
-
-/* Light hover lift */
-.view-all-link:hover {
-    background: color-mix(in srgb, var(--accent-color) 12%, var(--card-bg));
-    color: #ffffff;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px var(--shadow-color);
-    border-color: transparent;
-}
-
-.dark-mode .view-all-link {
-    border-color: rgba(255, 255, 255, 0.05);
-}
-
-
-/* =========================================================
-   Learning Notes cards (Recent Notes + Search Results)
-   Header-style colored top bar + white body
-   ========================================================= */
-
-.notes-learning .notes-scroll-area .note-card {
-    position: relative;
-    overflow: hidden;
-    /* Remove "list-like" style from generic scroll area cards */
-    margin-bottom: 16px;
-    border: none;
-    box-shadow: 0 6px 18px var(--shadow-color);
-    border-radius: 12px;
-    padding: 12px 14px 14px 14px;
-    background: var(--card-bg);
-}
-
-/* Colored header bar behind date + title */
-.notes-learning .notes-scroll-area .note-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 52px;                 /* height of the colored header */
-    background: var(--accent-color);
-}
-
-/* Place date + title on top of the header bar */
-.notes-learning .notes-scroll-area .note-date,
-.notes-learning .notes-scroll-area .note-title {
-    position: relative;
-    color: #ffffff;
-}
-
-.notes-learning .notes-scroll-area .note-date {
-    font-size: 11px;
-    font-weight: 600;
-    opacity: 0.9;
-    margin-bottom: 2px;
-}
-
-.notes-learning .notes-scroll-area .note-title {
-    font-size: 14px;
-    font-weight: 700;
-    margin: 0 0 8px 0;
-}
-
-/* Body text stays on normal background */
-.notes-learning .notes-scroll-area .note-preview {
-    position: relative;
-    margin-top: 6px;
-    font-size: 13px;
-    color: var(--text-secondary);
-    -webkit-line-clamp: 3;
-}
-
-/* Tags as soft pills */
-.notes-learning .notes-scroll-area .tags {
-    position: relative;
-    margin-top: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-}
-
-.notes-learning .notes-scroll-area .tag {
-    background: rgba(0, 0, 0, 0.03);
-    color: var(--text-secondary);
-    border-radius: 999px;
-    padding: 3px 10px;
-    font-size: 11px;
-    font-weight: 500;
-}
-
-.dark-mode .notes-learning .notes-scroll-area .tag {
-    background: rgba(255, 255, 255, 0.06);
-}
-/* =========================================================
-   Latest entry preview box inside Personal Notes cards
-   Example usage (Dev Log / Project Updates):
-   <div class="latest-entry-box">
-     <div class="latest-entry-header">📅 Latest: 2025-09-02</div>
-     <div class="latest-entry-body"> ... summary text ... </div>
-   </div>
-   ========================================================= */
-
-/* Outer box */
-.notes-section .latest-entry-box {
-    margin-top: 15px;
-    padding: 12px 14px;
-    border-radius: 1px;
-
-    background: rgba(155, 89, 182, 0.06);   /* soft accent tint (light mode) */
-    border-left: 3px solid var(--accent-color);
-
-}
-
-/* Dark mode: slightly stronger tint,但仍保持柔和 */
-.dark-mode .notes-section .latest-entry-box {
-    background: rgba(155, 89, 182, 0.15);
-}
-
-/* Header line: "2025-09-02" */
-.notes-section .latest-entry-header {
-    color: var(--accent-color);
-    font-weight: 700;
-    font-size: 0.75em;
-    margin-bottom: 4px;
-
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-
-.notes-section .latest-entry-header .entry-icon {
-    font-size: 1.1em;
-    line-height: 1;
-}
-
-/* Body text below the header */
-.notes-section .latest-entry-body {
-    color: var(--text-secondary);
-    font-size: 0.90em;
-    line-height: 1.0;
-}
-
-.notes-section .latest-entry-box .latest-entry-header + .latest-entry-body {
-    margin-bottom: 8px;  /* space below each entry body */
-}
-
-/* Extra spacing + optional separator before 2nd+ header */
-.notes-section .latest-entry-box .latest-entry-header:not(:first-of-type) {
-    margin-top: 10px;       /* vertical gap between entries */
-    padding-top: 6px;
-    border-top: 1px solid var(--hover-border);  /* subtle divider line */
-}
-/* =========================================================
-   Hover Effects for Dev Log and Project Updates Cards
-   ========================================================= */
-
-.notes-section .notes-devlog,
-.notes-section .notes-news {
-    transition: all 0.3s ease;
-}
-
-.notes-section .notes-devlog:hover,
-.notes-section .notes-news:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 26px var(--shadow-color);
-}
-
-.notes-section .latest-entry-box {
-    transition: none;
-    background: rgba(155, 89, 182, 0.06);
-}
-
-.dark-mode .notes-section .latest-entry-box {
-    background: rgba(155, 89, 182, 0.15);
+  .notes-learning .notes-scroll-area .note-preview {
+    margin-top: 4px;
+    -webkit-line-clamp: 2;   
+  }
 }
