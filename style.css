@@ -1121,7 +1121,7 @@ body {
     margin: 0 0 12px 0;        
   }
   .notes-learning .notes-scroll-area .note-card .note-title {
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.3;
     overflow: hidden;
     text-overflow: ellipsis;
